@@ -37,7 +37,7 @@ import java.sql.Statement;
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 2:28:39 PM,
  * Nov 8, 2013 Description:
  */
-public class DatabaseConnection {
+public class DatabaseConnection implements IDatabaseConnection{
 
     private final String databaseName;
     private final int portNo;
@@ -48,7 +48,6 @@ public class DatabaseConnection {
     private Connection connection;
 
     public DatabaseConnection(String databaseName, int portNo, String hostName, String userName, String password) {
-
         this.databaseName = databaseName;
         this.hostName = hostName;
         this.password = password;
