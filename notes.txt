@@ -1,0 +1,9 @@
+11/20/2013  - changed Date to long for time
+            - added MemoryLoader to load memory from dbase 
+            - save transcript sentences delimited by $$
+            - alter table conversation modify timeStarted bigint, modify timeEnded bigint;
+
+11/21/2013  - alter table session modify timeStarted not null, modify timeEnded bigint;
+
+11/28/2013  - alter table definition modify pos enum('N', 'V', 'P', 'Det', 'NP', 'PP', 'S', 'O', 'Q');
+
