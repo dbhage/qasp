@@ -26,16 +26,36 @@
 package parser;
 
 import frame.AFrame;
+import memory.Memory;
 
 /**
  * InputHandler class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:00:53 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:00:53 PM, Nov 7, 2013 
+ * Description:
  */
 public class InputHandler {
-
-    public AFrame handleText(String text) {
-        throw new UnsupportedOperationException("not yet implemented");
+    
+    private IParser parser;
+    
+    public void handleText(String text, ParserType pType, Memory memory) {
+        if (pType == null) {
+            System.err.println("Parser type is null.");
+            System.exit(-1);
+        }
+        else if (pType.equals(ParserType.QUERY)) {
+            parser = new QueryParser(memory);
+            parser.parse(text);
+        } else if (pType.equals(ParserType.SENTENCE)) {
+            parser = new SentenceParser(memory);
+            parser.parse(text);
+        }
+    }
+    
+    public AFrame getFrame() {
+        if (parser instanceof QueryParser) {
+            return ((QueryParser)parser).getFrame();
+        }
+        return null;
     }
 }

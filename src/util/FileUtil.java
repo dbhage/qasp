@@ -23,35 +23,45 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package memory.node;
+package util;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * StateNode class.
+ * FileUtil class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:25:51 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 3:07:14 PM,
+ * Nov 26, 2013 Description:
  */
-public class StateNode {
+public class FileUtil {
 
-    private int id;
-    private String characteristics;
-
-    public StateNode(int n, String c) {
-        this.id = n;
-        this.characteristics = c;
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @return the characteristics
-     */
-    public String getCharacteristics() {
-        return characteristics;
+    public static String[] readLine(String fileName) {
+        BufferedReader br = null;
+        List<String> lines = new ArrayList<>();
+        try {
+            br = new BufferedReader(new FileReader(fileName));
+            String line;
+            while (true) {
+                line = br.readLine();
+                if (line == null) {
+                    break;
+                }
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        return lines.toArray(new String[lines.size()]);
     }
 }

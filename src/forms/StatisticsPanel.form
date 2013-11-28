@@ -34,8 +34,8 @@
                           <Component id="sessionStartDateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="sessionStartDateTextField" alignment="0" pref="110" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="sessionStartDateTextField" pref="137" max="32767" attributes="0"/>
                           <Component id="noOfNodesTextField" alignment="0" max="32767" attributes="0"/>
                           <Component id="noOfConversationTextField" alignment="0" max="32767" attributes="0"/>
                           <Component id="sessionIdTextField" alignment="0" max="32767" attributes="0"/>
@@ -51,13 +51,13 @@
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="conversationDurationTextField" alignment="0" max="32767" attributes="0"/>
-                          <Component id="convoStartTimeTextField" alignment="0" max="32767" attributes="0"/>
-                          <Component id="noOfNodesTextFieldConvo" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="convoStartTimeTextField" alignment="0" pref="137" max="32767" attributes="0"/>
+                          <Component id="noOfNodesTextFieldConvo" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="convoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="56" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,7 +66,6 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="sessionLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
@@ -90,7 +89,7 @@
                       <Component id="sessionIdTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="65" max="32767" attributes="0"/>
+              <EmptySpace pref="83" max="32767" attributes="0"/>
               <Component id="convoLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">

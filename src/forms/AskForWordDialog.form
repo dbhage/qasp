@@ -72,10 +72,10 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="fillInInfoLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="definitionTextField" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
-                  <Component id="definitionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="definitionLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="definitionTextField" pref="26" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -84,7 +84,7 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="submitButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -128,10 +128,15 @@
     <Component class="javax.swing.JComboBox" name="posComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="V"/>
-            <StringItem index="1" value="P"/>
-            <StringItem index="2" value="PN"/>
+          <StringArray count="8">
+            <StringItem index="0" value="N"/>
+            <StringItem index="1" value="V"/>
+            <StringItem index="2" value="P"/>
+            <StringItem index="3" value="Det"/>
+            <StringItem index="4" value="NP"/>
+            <StringItem index="5" value="PP"/>
+            <StringItem index="6" value="S"/>
+            <StringItem index="7" value="O"/>
           </StringArray>
         </Property>
       </Properties>

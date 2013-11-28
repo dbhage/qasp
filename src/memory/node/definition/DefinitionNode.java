@@ -25,6 +25,7 @@
  */
 package memory.node.definition;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -35,6 +36,29 @@ import java.util.LinkedList;
  */
 public class DefinitionNode {
 
-    private String trigger;
-    private LinkedList<String> primeRepresentation;
+    private final String trigger;
+    private String primeRepresentation;
+    
+    public DefinitionNode(String trigger, String primeRep) {
+        this.trigger = trigger;
+        this.primeRepresentation = primeRep;
+    }
+
+    public boolean isMolecule() {
+        return trigger.startsWith("#");
+    }
+
+    /**
+     * @return the trigger
+     */
+    public String getTrigger() {
+        return trigger;
+    }
+
+    /**
+     * @return the primeRepresentation
+     */
+    public String getPrimeRepresentation() {
+        return primeRepresentation;
+    }
 }

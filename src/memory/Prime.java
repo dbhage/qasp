@@ -35,4 +35,18 @@ public class Prime {
 
     private String prime;
     private int valency;
+
+    /**
+     * @return the prime
+     */
+    public String getPrime() {
+        return prime;
+    }
+
+    /**
+     * @return the valency
+     */
+    public int getValency() {
+        return valency;
+    }
 }

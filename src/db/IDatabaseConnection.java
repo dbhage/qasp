@@ -23,24 +23,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package db;
 
-import com.mysql.jdbc.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * IDatabaseConnection interface.
- * @author Dwijesh Bhageerutty, neerav789@gmail.com
- * Date created: 5:32:38 PM, Nov 18, 2013
- * Description: 
+ *
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 5:32:38 PM,
+ * Nov 18, 2013 Description:
  */
 public interface IDatabaseConnection {
+
     public boolean establishConnection();
+
     public boolean closeConnection();
-    public ResultSet executeQuery(String query);    
-    public boolean executeInsert(String insertStatement);
+
+    public ResultSet executeQuery(String query);
+
+    public void executeInsert(String insertStatement);
 }

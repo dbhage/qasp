@@ -26,23 +26,31 @@
 package parser;
 
 import frame.AFrame;
+import memory.Memory;
 
 /**
  * QueryParser class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:04:39 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:04:39 PM, Nov 7, 2013 
+ * Description:
  */
 public class QueryParser implements IParser {
+    public final Memory memory;
+    public AFrame frame;
+    
+    public QueryParser(Memory memory) {
+        this.memory = memory;
+    }
 
     @Override
     public void parse(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        
+        
     }
 
-    @Override
     public AFrame getFrame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return frame;
     }
-
 }

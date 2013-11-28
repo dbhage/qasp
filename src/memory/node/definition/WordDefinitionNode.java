@@ -27,5 +27,20 @@ package memory.node.definition;
 
 public class WordDefinitionNode extends DefinitionNode {
 
-    private POS pos;
+    private final POS pos;
+
+    public WordDefinitionNode(String trigger, String primeRep, POS pos) {
+        super(trigger, primeRep);
+        if (pos == null) {
+            throw new NullPointerException("Creating word " + trigger + " a null POS");
+        }
+        this.pos = pos;
+    }
+
+    /**
+     * @return the pos
+     */
+    public POS getPos() {
+        return pos;
+    }
 }

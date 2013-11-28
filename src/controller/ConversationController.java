@@ -25,43 +25,82 @@
  */
 package controller;
 
+import forms.AskForWordDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import session.SessionManager;
 import forms.ConversationPanel;
+import forms.QASPFrame;
+import javax.swing.WindowConstants;
 
 /**
  * ConversationController class.
  *
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:52:27 PM,
- * Nov 7, 2013 Description:
+ Nov 7, 2013 Description:
  */
 public class ConversationController {
 
-    private ConversationPanel view;
-    private SessionManager model;
+    private final ConversationPanel conversationPanel;
+    private final QASPFrame view;
+    private final SessionManager model;
 
-    public ConversationController(ConversationPanel view, SessionManager model) {
-        this.view = view;
+    public ConversationController(QASPFrame qaspFrame, SessionManager model) {
+        this.view = qaspFrame;
+        this.conversationPanel = qaspFrame.getConversationPanel();
         this.model = model;
 
-        this.view.getInputTextField().addActionListener(new InputTextFieldActionListener());
+        this.conversationPanel.getInputTextField().addActionListener(new InputTextFieldActionListener());
     }
 
     private class InputTextFieldActionListener implements ActionListener {
-
+        
+        private AskForWordDialog dialog;
+        
         @Override
         public void actionPerformed(ActionEvent e) {
-            String text = view.getInputTextField().getText();
-            view.getInputTextField().setText("");
-            view.getConversationTextArea().append("> " + text + "\n");
+            String text = conversationPanel.getInputTextField().getText();
+            conversationPanel.getInputTextField().setText("");
+            conversationPanel.getConversationTextArea().append("> " + text + "\n");
 
+            checkForWordsExistence(text);
+            
             if (text.endsWith("?")) {
-                view.getConversationTextArea().append("> " + model.handleQuery(text) + "\n");
+                conversationPanel.getConversationTextArea().append("> " + model.handleQuery(text) + "\n");
             } else {
                 model.handleText(text);
+            }
+        }
+
+        private void checkForWordsExistence(String text) {
+            String[] words = text.split("[^a-zA-Z]+");
+            
+            if (!(words.length > 2)) {
+                System.err.println("Sentence length is not greater than 2.");
+                System.exit(-1);
+            }
+            
+            for (String word : words) {
+                System.out.println(word);
+                if (!model.wordExists(word)) {
+                    // show get word dialog box
+                    dialog = new AskForWordDialog(view, true, word);
+                    
+                    dialog.getSubmitButton().addActionListener(new SubmitButtonActionListener());
+                    dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                    dialog.setVisible(true);
+                }
+            }
+        }
+        
+        private class SubmitButtonActionListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String definition = dialog.getDefinitionTextField().getText();
+                String pos = (String) dialog.getPosComboBox().getSelectedItem();
+                model.saveNewWord(dialog.getWordLabel().getText(), definition, pos);       
+                dialog.setVisible(false);
             }
         }
     }

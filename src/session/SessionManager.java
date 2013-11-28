@@ -25,91 +25,180 @@
  */
 package session;
 
+import db.DatabaseConnection;
+import db.IDatabaseConnection;
+import frame.AFrame;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import parser.InputHandler;
+import parser.ParserType;
 import query.QueryHandler;
+import query.cma.CMAType;
+import util.DateUtil;
 
 /**
  * SessionManager class.
  *
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:28 PM,
- * Nov 7, 2013 Description:
+ Nov 7, 2013 Description:
  */
 public class SessionManager {
 
     private InputHandler inputHandler;
     private QueryHandler queryHandler;
-    private ArrayList<Session> sessions;
     private Session currentSession;
+    private final IDatabaseConnection dbConn;
 
-    public void createSession() {
+    public SessionManager() {
+        dbConn = new DatabaseConnection("qasp", 3306, "localhost", "dbhage", "qasp");
+        dbConn.establishConnection();
+        inputHandler = new InputHandler();
+        queryHandler = new QueryHandler();
     }
 
-    public boolean switchToSession(String sessionId) {
-        return true;
+    public void createSession() {
+        currentSession = new Session("S" + util.MathUtil.getRandomNumber(100000000, 999999999), dbConn);
+    }
+
+    public void switchToSession(String sessionId) {
+        currentSession = new Session(sessionId, dbConn);
+        SessionLoader sessionLoader = new SessionLoader(dbConn, currentSession);
+        sessionLoader.load();
     }
 
     public void handleText(String text) {
+        
+        if (!currentSession.isLive()) {
+            currentSession.startConversation();
+        }
+        
+        inputHandler.handleText(text, ParserType.SENTENCE, currentSession.getMemory());
     }
 
     public String handleQuery(String text) {
-        return "answer";
+        if (!currentSession.isLive()) {
+            currentSession.startConversation();
+        }
+        
+        inputHandler.handleText(text, ParserType.QUERY, currentSession.getMemory());
+        queryHandler.handleQuery(inputHandler.getFrame(), CMAType.ONE, currentSession.getMemory());
+        return queryHandler.getResult().toString();
     }
 
     public void saveCurrentSession() {
+        SessionSaver sessionSaver = new SessionSaver(dbConn, currentSession);
+        sessionSaver.save();
     }
-    
-    /**
-     * 
-     * @param sid
-     * @return 
-     */
+
     public boolean saveSessionAs(String sid) {
-        // if sid exists return false
-        // else save and return true
         return true;
     }
 
     public boolean currentSessionSaved() {
         return false;
     }
-    
+
     public String getCurrentConversationDuration() {
+        if (currentSession == null) {
+            return "";
+        }
         return "na";
     }
 
-    public String getConversationStartTime() {
-        return "na";
+    public String getCurrentConversationStartTime() {
+        if (currentSession == null) {
+            return "";
+        }
+        return DateUtil.dateToString(currentSession.getCurrentConversationStartTime());
     }
-    
+
     public String getNoOfConversations() {
-        return "na";
+        if (currentSession == null) {
+            return "";
+        }
+        return currentSession.getNoOfConversations() + "";
     }
-    
+
     public String getNoOfNodesInCurrentSession() {
-        return "na";
+        if (currentSession == null) {
+            return "";
+        }
+        return currentSession.getNoOfNodes() + "";
     }
-    
+
     public String getSessionId() {
-        return "na";
+        if (currentSession == null) {
+            return "";
+        }
+        return currentSession.getSessionID();
     }
-    
+
     public String getSessionStartTime() {
-        return "na";
+        if (currentSession == null) {
+            return "";
+        }
+        return DateUtil.dateToString(currentSession.getStartDate());
     }
-    
+
     public String getNoOfNodesInCurrentConversation() {
-        return "na";
+        if (currentSession == null) {
+            return "";
+        }
+        return currentSession.getNoOfNodesInCurrentConversation() + "";
     }
-    
+
     public String[] getAvailableSessions() {
-        return new String[]{"s0000000001", "efcdavcdsvsdf", "efefewvcesvcew"};
+        String query = "SELECT sessionid FROM session;";
+        ResultSet rs = dbConn.executeQuery(query);
+        if (rs == null) {
+            return null;
+        } else {
+            List<String> sessions = new ArrayList<>();
+            try {
+                while (rs.next()) {
+                    sessions.add(rs.getString("sessionid"));
+                }
+            } catch (SQLException ex) {
+                System.err.println("Exception when getting list of sessionids from database");
+                ex.printStackTrace();
+                System.exit(-1);
+            }
+            return sessions.toArray(new String[sessions.size()]);
+        }
     }
-    
+
     public void endCurrentSession() {
+        if (currentSession != null) {
+            currentSession.setEndTime(System.currentTimeMillis());
+            currentSession.setLive(false);
+        }
+    }
+
+    public void endCurrentConversation() {
+        if (currentSession != null) {
+            currentSession.endCurrentConversation();
+        }
+    }
+
+    public boolean wordExists(String word) {
+        if (currentSession == null) {
+            System.err.println("wordExists being called when no session is active.");
+            System.exit(-1);
+        }
+        return currentSession.wordExists(word);
+    }
+
+    public void saveNewWord(String word, String definition, String pos) {
+        if (currentSession == null) {
+            System.err.println("saveNewWord being called when no session is active.");
+            System.exit(-1);
+        }
+        currentSession.saveNewWord(word, definition, pos);
     }
     
-    public void endCurrentConversation() {
-        
+    public void disconnectFromDatabase() {
+        dbConn.closeConnection();
     }
 }

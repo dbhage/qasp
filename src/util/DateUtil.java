@@ -23,35 +23,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package memory.node;
+package util;
+
+import java.util.Date;
 
 /**
- * StateNode class.
+ * DateUtil class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:25:51 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 11:34:41 PM,
+ * Nov 20, 2013 Description:
  */
-public class StateNode {
-
-    private int id;
-    private String characteristics;
-
-    public StateNode(int n, String c) {
-        this.id = n;
-        this.characteristics = c;
-    }
+public class DateUtil {
 
     /**
-     * @return the id
+     * Takes a long and returns a date in format dd-mmm-yyyy hh:mm
+     * dd is 1 or 2 digits representing the day
+     * mmm is three letters representing the month
+     * yyyy is 4 digits representing the year
+     * hh:mm the time (hour and minute)
+     * Example: 1385347724573 -> 24-Nov-2013 21:48
+     * @param date - <code>long</code> representing the time in ms from the epoch
+     * @return <code>String</code> representing date and time
      */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @return the characteristics
-     */
-    public String getCharacteristics() {
-        return characteristics;
+    public static String dateToString(long date) {
+        String[] split = (new Date(date)).toString().split(" ");
+        return split[2] + "-" + split[1] + "-" + split[5] + " " + split[3].substring(0,5);
     }
 }

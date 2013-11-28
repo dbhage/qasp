@@ -36,4 +36,31 @@ public class EventNode {
     private int id;
     private String verb;
     private String object;
+
+    public EventNode(int n, String v, String o) {
+        this.id = n;
+        this.verb = v;
+        this.object = o;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @return the verb
+     */
+    public String getVerb() {
+        return verb;
+    }
+
+    /**
+     * @return the object
+     */
+    public String getObject() {
+        return object;
+    }
 }

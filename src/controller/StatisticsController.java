@@ -25,6 +25,7 @@
  */
 package controller;
 
+import forms.QASPFrame;
 import session.SessionManager;
 import forms.StatisticsPanel;
 
@@ -32,31 +33,33 @@ import forms.StatisticsPanel;
  * StatisticsController class.
  *
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:53:27 PM,
- * Nov 7, 2013 Description:
+ Nov 7, 2013 Description:
  */
 public class StatisticsController implements Runnable {
 
-    private final StatisticsPanel view;
+    private final StatisticsPanel statsPanel;
     private final SessionManager model;
-
-    public StatisticsController(StatisticsPanel view, SessionManager model) {
-        this.view = view;
+    private final QASPFrame view;
+    
+    public StatisticsController(QASPFrame qaspFrame, SessionManager model) {
+        this.statsPanel = qaspFrame.getStatisticsPanel();
         this.model = model;
+        this.view = qaspFrame;
     }
 
     @Override
     public void run() {
-        while(view.isEnabled()) {
+        while (statsPanel.isEnabled()) {
             // session related text fields
-            view.getNoOfNodesTextField().setText(model.getNoOfNodesInCurrentSession());
-            view.getSessionIdTextField().setText(model.getSessionId());
-            view.getSessionStartDateTextField().setText(model.getSessionStartTime());
+            statsPanel.getNoOfNodesTextField().setText(model.getNoOfNodesInCurrentSession());
+            statsPanel.getSessionIdTextField().setText(model.getSessionId());
+            statsPanel.getSessionStartDateTextField().setText(model.getSessionStartTime());
 
             // conversation related text fields
-            view.getNoOfNodesTextFieldConvo().setText(model.getNoOfNodesInCurrentConversation());
-            view.getConversationDurationTextField().setText(model.getCurrentConversationDuration());
-            view.getConvoStartTimeTextField().setText(model.getConversationStartTime());
-            view.getNoOfConversationTextField().setText(model.getNoOfConversations());
+            statsPanel.getNoOfNodesTextFieldConvo().setText(model.getNoOfNodesInCurrentConversation());
+            statsPanel.getConversationDurationTextField().setText(model.getCurrentConversationDuration());
+            statsPanel.getConvoStartTimeTextField().setText(model.getCurrentConversationStartTime());
+            statsPanel.getNoOfConversationTextField().setText(model.getNoOfConversations());
         }
     }
 }

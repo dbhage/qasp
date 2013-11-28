@@ -39,6 +39,7 @@ public class QASPFrame extends javax.swing.JFrame {
     public QASPFrame() {
         initComponents();
         setResizable(false);
+        conversationPanel.getInputTextField().setEnabled(false);
     }
 
     /**
@@ -168,7 +169,7 @@ public class QASPFrame extends javax.swing.JFrame {
     public javax.swing.JMenuItem getSaveSessionMenuItem() {
         return saveSessionMenuItem;
     }
-    
+
     /**
      * @return the endSessionMenuItem
      */
@@ -189,7 +190,7 @@ public class QASPFrame extends javax.swing.JFrame {
     public javax.swing.JMenuItem getEndConversationMenuItem() {
         return endConversationMenuItem;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu conversationMenu;
     private forms.ConversationPanel conversationPanel;

@@ -25,6 +25,7 @@
  */
 package memory;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,23 +39,58 @@ import memory.node.ConceptNode;
  */
 public class Conversation {
 
-    private Date timeStarted;
-    private Date timeEnded;
+    private long timeStarted;
+    private long timeEnded;
     private boolean live;
     private List<ConceptNode> concepts;
     private LinkedList<String> transcript;
+    private int no;
+    private int noOfNodes;
+
+    public Conversation(int n) {
+        this.timeStarted = System.currentTimeMillis();
+        this.live = true;
+        this.concepts = new ArrayList<>();
+        this.transcript = new LinkedList<>();
+        this.no = n;
+        this.noOfNodes = 0;
+    }
+
+    /**
+     *
+     */
+    public void endConversation() {
+        timeEnded = System.currentTimeMillis();
+        live = false;
+    }
+
+    /**
+     *
+     * @param s
+     */
+    public void addSentence(String s) {
+        transcript.add(s);
+    }
+
+    /**
+     *
+     * @param conceptNode
+     */
+    public void addConceptNode(ConceptNode conceptNode) {
+        concepts.add(conceptNode);
+    }
 
     /**
      * @return the timeStarted
      */
-    public Date getTimeStarted() {
+    public long getTimeStarted() {
         return timeStarted;
     }
 
     /**
      * @return the timeEnded
      */
-    public Date getTimeEnded() {
+    public long getTimeEnded() {
         return timeEnded;
     }
 
@@ -77,5 +113,51 @@ public class Conversation {
      */
     public LinkedList<String> getTranscript() {
         return transcript;
+    }
+
+    /**
+     * @param timeStarted the timeStarted to set
+     */
+    public void setTimeStarted(long timeStarted) {
+        this.timeStarted = timeStarted;
+    }
+
+    /**
+     * @param timeEnded the timeEnded to set
+     */
+    public void setTimeEnded(long timeEnded) {
+        this.timeEnded = timeEnded;
+    }
+
+    /**
+     * @param live the live to set
+     */
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    /**
+     * @param concepts the concepts to set
+     */
+    public void setConcepts(List<ConceptNode> concepts) {
+        this.concepts = concepts;
+    }
+
+    /**
+     * @param transcript the transcript to set
+     */
+    public void setTranscript(LinkedList<String> transcript) {
+        this.transcript = transcript;
+    }
+
+    /**
+     * @return the no
+     */
+    public int getNo() {
+        return no;
+    }
+
+    public int getNoOfNodes() {
+        return noOfNodes;
     }
 }

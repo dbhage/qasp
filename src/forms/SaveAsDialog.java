@@ -23,7 +23,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package forms;
 
 /**
@@ -111,14 +110,14 @@ public class SaveAsDialog extends javax.swing.JDialog {
     public javax.swing.JButton getSaveButton() {
         return saveButton;
     }
-    
+
     /**
      * @return the sessionIDTextField
      */
     public javax.swing.JTextField getSessionIDTextField() {
         return sessionIDTextField;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel enterSessionIDLabel;

@@ -23,36 +23,41 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package session;
 
-import java.util.Date;
+import db.IDatabaseConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import memory.Memory;
+import memory.node.definition.POS;
 
 /**
  * Session class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:18 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:18 PM, Nov 7, 2013 
+ * Description:
  */
 public class Session {
 
-    private String sessionID;
-    private Memory memory;
+    private final String sessionID;
+    private final Memory memory;
     private boolean memoryInitialized;
-    private Date startDate;
-
-    public Session(String sid) {
-
+    private long startTime;
+    private long endTime;
+    private boolean live;
+    private final IDatabaseConnection dbConn;
+    
+    public Session(String sid, IDatabaseConnection dbConn) {
+        memory = new Memory();
+        this.sessionID = sid;
+        this.startTime = System.currentTimeMillis();
+        this.live = false;
+        this.dbConn = dbConn;
     }
 
-    public void save() {
-
-    }
-
-    public void initializeMemory() {
-
-    }
-
+    /* getters and setters */
+    
     /**
      * @return the sessionID
      */
@@ -75,10 +80,114 @@ public class Session {
     }
 
     /**
-     * @return the startDate
+     * @return the startTime
      */
-    public Date getStartDate() {
-        return startDate;
+    public long getStartDate() {
+        return startTime;
     }
 
+    /**
+     * End the current <code>Conversation</code>
+     */
+    public void endCurrentConversation() {
+        memory.endCurrentConversation();
+        live = false;
+    }
+
+    /**
+     * @param memoryInitialized the memoryInitialized to set
+     */
+    public void setMemoryInitialized(boolean memoryInitialized) {
+        this.memoryInitialized = memoryInitialized;
+    }
+
+    /**
+     * @param startTime the startTime to set
+     */
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * @param endTime the endTime to set
+     */
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+    
+
+    public int getNoOfNodesInCurrentConversation() {
+        return memory.getNoOfNodesInConversation();
+    }
+
+    public int getNoOfNodes() {
+        return memory.getNoOfNodes();
+    }
+
+    public int getNoOfConversations() {
+        return memory.getNoOfConversations();
+    }
+
+    /**
+     * @return the live
+     */
+    public boolean isLive() {
+        return live;
+    }
+
+    /**
+     * @param live the live to set
+     */
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    public long getCurrentConversationStartTime() {
+        return memory.getCurrentConversationStartTime();
+    }
+
+    public boolean wordExists(String word) {
+        boolean exists = false;
+        if (memory.wordExists(word)) {
+            return true;
+        } else {
+            // get from dbase
+            String query = "SELECT * FROM definition WHERE trig=\'" + word + "\';";
+            ResultSet rs = dbConn.executeQuery(query);
+            if (rs == null) {
+                return false;
+            }
+            try {
+                while (rs.next()) {
+                    exists = true;
+                    String trigger = rs.getString("trig");
+                    String primeRep = rs.getString("primerep");
+                    String pos = rs.getString("pos");
+                    memory.addDefinitionNode(trigger, primeRep, POS.stringToPOS(pos));
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                System.exit(-1);
+            }
+        }
+        return exists;
+    }
+
+    public void saveNewWord(String word, String definition, String pos) {
+        // add to memory
+        memory.addDefinitionNode(word, definition, POS.stringToPOS(pos));
+        // add to database
+        String insert = "INSERT INTO definition VALUES(" 
+                + "\'" + word + "\',"
+                + "\'" + definition + "\',"
+                + "\'" + pos + "\',"
+                + "\'" + "word" + "\');";
+        
+       dbConn.executeInsert(insert);
+    }
+
+    public void startConversation() {
+        memory.startConversation();
+        live = true;
+    }
 }

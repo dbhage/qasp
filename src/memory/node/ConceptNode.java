@@ -25,6 +25,7 @@
  */
 package memory.node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,47 @@ public class ConceptNode {
 
     private String text;
     private int typeId;
-    List<String> molecules;
-    ConceptType type;
+    private List<String> molecules;
+    private ConceptType type;
+
+    public ConceptNode(String text, ConceptType type, int tid) {
+        this.text = text;
+        this.typeId = tid;
+        this.molecules = new ArrayList<>();
+        this.type = type;
+    }
+
+    public void addMolecule(String molecule) {
+        if (molecule != null) {
+            molecules.add(molecule);
+        }
+    }
+
+    /**
+     * @return the text
+     */
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * @return the typeId
+     */
+    public int getTypeId() {
+        return typeId;
+    }
+
+    /**
+     * @return the molecules
+     */
+    public List<String> getMolecules() {
+        return molecules;
+    }
+
+    /**
+     * @return the type
+     */
+    public ConceptType getType() {
+        return type;
+    }
 }

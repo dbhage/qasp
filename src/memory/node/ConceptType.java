@@ -34,4 +34,15 @@ package memory.node;
 public enum ConceptType {
 
     STATE, EVENT;
+
+    public static ConceptType stringToConceptType(String s) {
+        switch (s) {
+            case "STATE":
+                return ConceptType.STATE;
+            case "EVENT":
+                return ConceptType.EVENT;
+            default:
+                return null;
+        }
+    }
 }

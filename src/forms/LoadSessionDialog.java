@@ -33,14 +33,16 @@ public class LoadSessionDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form LoadSessionDialog
+     *
      * @param parent
      * @param modal
-     * @param availableSessions - list of available session id's for user to choose from
+     * @param availableSessions - list of available session id's for user to
+     * choose from
      */
     public LoadSessionDialog(java.awt.Frame parent, boolean modal, String[] availableSessions) {
         super(parent, modal);
         initComponents();
-        for (String item: availableSessions) {
+        for (String item : availableSessions) {
             savedSessionsComboBox.addItem(item);
         }
     }
@@ -122,7 +124,6 @@ public class LoadSessionDialog extends javax.swing.JDialog {
     public javax.swing.JComboBox getSavedSessionsComboBox() {
         return savedSessionsComboBox;
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;

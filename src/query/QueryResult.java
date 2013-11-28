@@ -35,10 +35,12 @@ public class QueryResult {
 
     private String result;
 
-    /**
-     * @return the result
-     */
-    public String getResult() {
+    public QueryResult(String result) {
+        this.result = result;
+    }
+    
+    @Override
+    public String toString() {
         return result;
     }
 }

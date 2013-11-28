@@ -28,6 +28,9 @@ package query;
 import query.cma.ICMA;
 import frame.AFrame;
 import memory.Memory;
+import query.cma.CMA1;
+import query.cma.CMA2;
+import query.cma.CMAType;
 
 /**
  * QueryHandler class.
@@ -40,12 +43,21 @@ public class QueryHandler {
     private ICMA icma;
     private QueryResult queryResult;
 
-    public QueryHandler(AFrame frame, int cma, Memory memory) {
-        throw new UnsupportedOperationException("not yet implemented");
+    public void handleQuery(AFrame frame, CMAType cType, Memory memory) {
+        if (frame == null || cType == null || memory == null) {
+            throw new NullPointerException("null parameters being passed to QueryHandler.queryHandler");
+        }
+        
+        if (cType.equals(CMAType.ONE)) {
+            icma = new CMA1();
+        } else if (cType.equals(CMAType.TWO)) {
+            icma = new CMA2();
+        } 
+        
+        queryResult = icma.search(frame, memory);
     }
 
     public QueryResult getResult() {
         return queryResult;
     }
-
 }

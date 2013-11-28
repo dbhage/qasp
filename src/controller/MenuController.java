@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import session.SessionManager;
 import forms.LoadSessionDialog;
+import forms.QASPFrame;
 import forms.SaveAsDialog;
 import forms.SaveErrorDialog;
 
@@ -37,44 +38,46 @@ import forms.SaveErrorDialog;
  * FileMenuController class.
  *
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 3:06:50 PM,
- * Nov 11, 2013 Description:
+ Nov 11, 2013 Description:
  */
 public class MenuController {
 
     private final SessionManager model;
+    private final QASPFrame view;
     
-    public MenuController(JMenuItem saveSessionMenuItem,
-                            JMenuItem loadSessionMenuItem,
-                                JMenuItem newSessionMenuItem,
-                                    JMenuItem endSessionMenuItem,
-                                        JMenuItem endConvoMenuItem,
-                                            SessionManager model) {
+    public MenuController(QASPFrame qaspFrame, SessionManager model) {
         this.model = model;
-        saveSessionMenuItem.addActionListener(new SaveMenuItemActionListener());
+        this.view = qaspFrame;
+        JMenuItem saveSessionMenuItem = qaspFrame.getSaveSessionMenuItem();
+        JMenuItem loadSessionMenuItem = qaspFrame.getLoadSessionMenuItem();
+        JMenuItem newSessionMenuItem = qaspFrame.getNewSessionMenuItem();
+        JMenuItem endSessionMenuItem = qaspFrame.getEndSessionMenuItem();
+        JMenuItem endConvoMenuItem = qaspFrame.getEndConversationMenuItem();
+
+        saveSessionMenuItem.addActionListener(new SaveMenuActionListener());
         loadSessionMenuItem.addActionListener(new LoadMenuActionListener());
         newSessionMenuItem.addActionListener(new NewMenuActionListener());
         endSessionMenuItem.addActionListener(new EndMenuActionListener());
-        
         endConvoMenuItem.addActionListener(new EndConversationActionListener());
     }
-    
-    private class SaveMenuItemActionListener implements ActionListener {
-        
+
+    private class SaveMenuActionListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             if (model.currentSessionSaved()) {
                 model.saveCurrentSession();
             } else {
-                
+
                 // ask for session id to use to store it
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     @Override
                     public void run() {
                         final SaveAsDialog saveAsDialog = new SaveAsDialog(new javax.swing.JFrame(), true);
-                        
+
                         // add action listener for save button
                         saveAsDialog.getSaveButton().addActionListener(new ActionListener() {
-                            
+
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 if (!saveAsDialog.getSessionIDTextField().getText().isEmpty()) {
@@ -88,13 +91,13 @@ public class MenuController {
 
                                                 // add action listener for ok button
                                                 saveErrorDialog.getOkButton().addActionListener(new ActionListener() {
-                                                    
+
                                                     @Override
                                                     public void actionPerformed(ActionEvent e) {
                                                         saveErrorDialog.setVisible(false);
                                                     }
                                                 });
-                                                
+
                                                 // add window listener for save error dialog
                                                 saveErrorDialog.addWindowListener(new java.awt.event.WindowAdapter() {
                                                     @Override
@@ -112,11 +115,11 @@ public class MenuController {
                                     }
                                 }
                             }
-                            
+
                         });
-                        
+
                         // <editor-fold defaultstate="collapsed" desc="action listener for cancel button">
-                        saveAsDialog.getCancelButton().addActionListener(new ActionListener(){
+                        saveAsDialog.getCancelButton().addActionListener(new ActionListener() {
 
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -124,7 +127,7 @@ public class MenuController {
                             }
                         });
                         // </editor-fold>
-                        
+
                         saveAsDialog.addWindowListener(new java.awt.event.WindowAdapter() {
                             @Override
                             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -134,25 +137,31 @@ public class MenuController {
                         saveAsDialog.setVisible(true);
                     }
                 });
-                
+
             }
         }
-        
+
     }
-    
+
     private class LoadMenuActionListener implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
+            final String [] availableSessions = model.getAvailableSessions();
+            if (availableSessions == null) {
+                System.out.println("No sessions to be loaded.");
+                return;
+            }
+            
             // launch load session dialog box
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    final LoadSessionDialog dialog = new LoadSessionDialog(new javax.swing.JFrame(), true, model.getAvailableSessions());
+                    final LoadSessionDialog dialog = new LoadSessionDialog(new javax.swing.JFrame(), true, availableSessions);
 
                     // add action listener for load button
                     dialog.getLoadButton().addActionListener(new ActionListener() {
-                        
+
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             // load button has been pressed
@@ -163,12 +172,13 @@ public class MenuController {
                             model.switchToSession(sid);
                             System.out.println("Loaded session: " + sid);
                             dialog.setVisible(false);
+                            view.getConversationPanel().getInputTextField().setEnabled(true);
                         }
                     });
 
                     // <editor-fold defaultstate="collapsed" desc="add action listener for cancel button">
                     dialog.getCancelButton().addActionListener(new ActionListener() {
-                        
+
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             // cancel load, i.e. do nothing
@@ -178,7 +188,7 @@ public class MenuController {
                         }
                     });
                     // </editor-fold>
-                    
+
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent e) {
@@ -190,19 +200,20 @@ public class MenuController {
             });
         }
     }
-    
+
     private class NewMenuActionListener implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Creating new session.");
             model.createSession();
+            view.getConversationPanel().getInputTextField().setEnabled(true);
         }
-        
+
     }
-    
+
     private class EndMenuActionListener implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Current Session Ended");
@@ -217,6 +228,6 @@ public class MenuController {
             System.out.println("Current Convesation Ended!");
             model.endCurrentConversation();
         }
-        
+
     }
 }

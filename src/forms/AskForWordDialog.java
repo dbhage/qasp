@@ -36,12 +36,14 @@ public class AskForWordDialog extends javax.swing.JDialog {
      *
      * @param parent
      * @param modal
+     * @param word - word for which definition is required
      */
-    public AskForWordDialog(java.awt.Frame parent, boolean modal) {
+    public AskForWordDialog(java.awt.Frame parent, boolean modal, String word) {
         super(parent, modal);
         initComponents();
+        wordLabel.setText(word);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,7 +81,7 @@ public class AskForWordDialog extends javax.swing.JDialog {
 
         posLabel.setText("POS:");
 
-        posComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "V", "P", "PN" }));
+        posComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "N", "V", "P", "Det", "NP", "PP", "S", "O" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,17 +123,17 @@ public class AskForWordDialog extends javax.swing.JDialog {
                     .addComponent(wordLabel))
                 .addGap(18, 18, 18)
                 .addComponent(fillInInfoLabel)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(definitionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(definitionLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(definitionLabel)
+                    .addComponent(definitionTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(posLabel)
                     .addComponent(posComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(submitButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -140,48 +142,6 @@ public class AskForWordDialog extends javax.swing.JDialog {
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_submitButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AskForWordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AskForWordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AskForWordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AskForWordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AskForWordDialog dialog = new AskForWordDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel definitionLabel;
@@ -193,4 +153,32 @@ public class AskForWordDialog extends javax.swing.JDialog {
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel wordLabel;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the definitionTextField
+     */
+    public javax.swing.JTextField getDefinitionTextField() {
+        return definitionTextField;
+    }
+
+    /**
+     * @return the posComboBox
+     */
+    public javax.swing.JComboBox getPosComboBox() {
+        return posComboBox;
+    }
+
+    /**
+     * @return the submitButton
+     */
+    public javax.swing.JButton getSubmitButton() {
+        return submitButton;
+    }
+
+    /**
+     * @return the wordLabel
+     */
+    public javax.swing.JLabel getWordLabel() {
+        return wordLabel;
+    }
 }

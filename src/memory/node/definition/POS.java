@@ -39,4 +39,27 @@ public enum POS {
     public String toString() {
         throw new UnsupportedOperationException("not yet implemented");
     }
+
+    public static POS stringToPOS(String pos) {
+        switch (pos) {
+            case "V":
+                return POS.V;
+            case "N":
+                return POS.N;
+            case "P":
+                return POS.P;
+            case "Det":
+                return POS.Det;
+            case "NP":
+                return POS.NP;
+            case "PP":
+                return POS.PP;
+            case "S":
+                return POS.S;
+            case "O":
+                return POS.O;
+            default:
+                return null;
+        }
+    }
 }

@@ -25,6 +25,71 @@
  */
 package frame;
 
+/**
+ *
+ * @author Dwijesh Bhageerutty
+ */
 public class SVOFrame extends AFrame {
 
+    /**
+     * The subject of the sentence
+     */
+    private String subject;
+
+    /**
+     * The verb of the sentence
+     */
+    private String verb;
+
+    /**
+     * The object of the sentence
+     */
+    private String object;
+
+    /**
+     * @return the subject
+     */
+    public String getSubject() {
+        return subject;
+    }
+
+    /**
+     * @return the verb
+     */
+    public String getVerb() {
+        return verb;
+    }
+
+    /**
+     * @return the object
+     */
+    public String getObject() {
+        return object;
+    }
+
+    /**
+     * @param subject the subject to set
+     */
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    /**
+     * @param verb the verb to set
+     */
+    public void setVerb(String verb) {
+        this.verb = verb;
+    }
+
+    /**
+     * @param object the object to set
+     */
+    public void setObject(String object) {
+        this.object = object;
+    }
+
+    @Override
+    public String toString() {
+        return "Subject: " + subject +  " Verb: " + verb + " Object: " + object;
+    }
 }

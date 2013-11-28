@@ -37,7 +37,7 @@ import java.sql.Statement;
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 2:28:39 PM,
  * Nov 8, 2013 Description:
  */
-public class DatabaseConnection implements IDatabaseConnection{
+public class DatabaseConnection implements IDatabaseConnection {
 
     private final String databaseName;
     private final int portNo;
@@ -56,10 +56,11 @@ public class DatabaseConnection implements IDatabaseConnection{
         this.connection = null;
     }
 
+    @Override
     public boolean establishConnection() {
         final String url = "jdbc:mysql://" + hostName + ":" + portNo + "/" + databaseName;
         try {
-            System.out.println("Connecting database...");
+            System.out.println("Connecting to database...");
             connection = (Connection) DriverManager.getConnection(url, userName, password);
             System.out.println("Database connected!");
             return true;
@@ -68,6 +69,7 @@ public class DatabaseConnection implements IDatabaseConnection{
         }
     }
 
+    @Override
     public boolean closeConnection() {
         System.out.println("Closing the connection.");
         if (connection != null) {
@@ -82,7 +84,14 @@ public class DatabaseConnection implements IDatabaseConnection{
         return true;
     }
 
+    @Override
     public ResultSet executeQuery(String query) {
+        if (connection==null) {
+            throw new NullPointerException("Trying to execute query when Connection is null.");
+        }
+        
+        System.out.println("Attempting to execute query: " + query);
+        
         Statement statement;
         ResultSet resultSet = null;
         try {
@@ -91,11 +100,30 @@ public class DatabaseConnection implements IDatabaseConnection{
         } catch (SQLException ex) {
             System.err.println("SQLException thrown when attempting to execute query" + query);
             System.err.println("Stack trace:\n" + ex.toString());
+            System.exit(-1);
         }
+        
+        System.out.println("Query successful.");
         return resultSet;
     }
-    
-    public boolean executeInsert(String insertStatement) {
-        throw new UnsupportedOperationException("Not yet implemented");
+
+    @Override
+    public void executeInsert(String insert) {
+        if (connection==null) {
+            throw new NullPointerException("Trying to execute query when Connection is null.");
+        }
+        System.out.println("Attempting to execute: " + insert);
+        
+        Statement statement;
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(insert);
+        } catch (SQLException ex) {
+            System.err.println("SQLException thrown when attempting to execute INSERT statement");
+            System.err.println("Stack trace:\n" + ex.toString());
+            System.exit(-1);
+        }
+        System.out.println("INSERT successful");
     }
 }
+
