@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import memory.Conversation;
 import memory.Memory;
@@ -47,9 +48,9 @@ import memory.node.definition.WordDefinitionNode;
 
 /**
  * SessionLoader class.
- * 
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 10:41:10 PM Nov 20, 2013 
- * Description: Load a session from the database.
+ *
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 10:41:10 PM
+ * Nov 20, 2013 Description: Load a session from the database.
  */
 public class SessionLoader {
 
@@ -57,16 +58,17 @@ public class SessionLoader {
     private final Session session;
     private final Memory memory;
     private final String sessionId;
-    
+
     /**
      * Constructor for <code>SessionLoader</code>
+     *
      * @param dbConnn
-     * @param session 
+     * @param session
      */
     public SessionLoader(IDatabaseConnection dbConnn, Session session) {
         this.session = session;
         this.memory = session.getMemory();
-        
+
         if (!memory.isEmpty()) {
             System.err.println("Passing MemoryLoader a non-empty memory.");
             System.exit(-1);
@@ -99,23 +101,24 @@ public class SessionLoader {
 
     /**
      * Load Session data
-     * @throws SQLException 
+     *
+     * @throws SQLException
      */
     private void loadSessionData() throws SQLException {
         String query = "SELECT * FROM session WHERE sessionid=" + sessionId + ";";
         ResultSet rs = dbConn.executeQuery(query);
-        
+
         if (rs == null) {
             System.err.println("Session id " + sessionId + " not found in session table!");
             System.exit(-1);
         }
-        
+
         while (rs.next()) {
             Long timeStarted = rs.getLong("timeStarted");
             session.setStartTime(timeStarted);
         }
     }
-    
+
     /**
      * load all words
      */
@@ -128,7 +131,7 @@ public class SessionLoader {
             return;
         }
 
-        HashMap<String, WordDefinitionNode> map = new HashMap<>();
+        HashMap<String, List<WordDefinitionNode>> map = new HashMap<>();
 
         while (rs.next()) {
             String defid = rs.getString("defid");
@@ -153,7 +156,14 @@ public class SessionLoader {
             String pos = rsDef.getString("pos");
 
             WordDefinitionNode word = new WordDefinitionNode(trigger, primeRep, POS.stringToPOS(pos));
-            map.put(trigger, word);
+
+            if (map.get(trigger) == null) {
+                ArrayList<WordDefinitionNode> list = new ArrayList<>();
+                list.add(word);
+                map.put(trigger, list);
+            } else {
+                map.get(trigger).add(word);
+            }
         }
         memory.setWordNodes(map);
     }
@@ -170,7 +180,7 @@ public class SessionLoader {
             return;
         }
 
-        HashMap<String, DefinitionNode> map = new HashMap<>();
+        HashMap<String, List<DefinitionNode>> map = new HashMap<>();
 
         while (rs.next()) {
             String defid = rs.getString("defid");
@@ -194,7 +204,15 @@ public class SessionLoader {
             String primeRep = rsDef.getString("primerep");
 
             DefinitionNode textNode = new DefinitionNode(trigger, primeRep);
-            map.put(trigger, textNode);
+
+            if (map.get(trigger) == null) {
+                ArrayList<DefinitionNode> list = new ArrayList<>();
+                list.add(textNode);
+                map.put(trigger, list);
+            } else {
+                map.get(trigger).add(textNode);
+            }
+
         }
         memory.setTextNodes(map);
     }
@@ -266,7 +284,7 @@ public class SessionLoader {
             }
 
             // add convo to list
-            ConceptNode conceptNode = new ConceptNode(text, conceptType, cid);
+            ConceptNode conceptNode = new ConceptNode(text, conceptType, cid, new ArrayList<String>());
             allConcepts.put(cid, conceptNode);
         }
         memory.setAllConcepts(allConcepts);
@@ -285,9 +303,9 @@ public class SessionLoader {
             System.out.println("No records in conversation table.");
             return;
         }
-        
+
         ArrayList<Conversation> convos = new ArrayList<>();
-        
+
         while (rs.next()) {
             int cid = rs.getInt("convoid");
             long timeStarted = rs.getLong("timeStarted");
@@ -321,7 +339,7 @@ public class SessionLoader {
         }
 
         HashMap<Integer, EventNode> map = new HashMap<>();
-        
+
         while (rs.next()) {
             int id = rs.getInt("eventid");
             String verb = rs.getString("verb");
@@ -339,7 +357,7 @@ public class SessionLoader {
     private void loadStates() throws SQLException {
         String query = "SELECT * FROM state WHERE sessionid=" + sessionId + ";";
         ResultSet rs = dbConn.executeQuery(query);
-        
+
         if (rs == null) {
             System.out.println("No records in event table.");
             return;
@@ -367,10 +385,11 @@ public class SessionLoader {
             String query = "SELECT conceptid FROM conversationconceptrelationship WHERE sessionid=" + sessionId
                     + ", convoid=" + conversation.getNo() + ";";
             ResultSet rs = dbConn.executeQuery(query);
-            
-            if (rs==null) 
+
+            if (rs == null) {
                 continue;
-            
+            }
+
             while (rs.next()) {
                 int conceptId = rs.getInt("conceptid");
                 ConceptNode conceptNode = memory.getConcept(conceptId);
@@ -391,9 +410,10 @@ public class SessionLoader {
                     + ", conceptid=" + conceptNode.getTypeId() + ";";
             ResultSet rs = dbConn.executeQuery(query);
 
-            if (rs == null)
+            if (rs == null) {
                 continue;
-            
+            }
+
             while (rs.next()) {
                 int defid = rs.getInt("defid");
 

@@ -31,20 +31,20 @@ import java.util.List;
 /**
  * ConceptNode class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:39:08 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:39:08 PM, Nov 7, 2013 
+ * Description:
  */
 public class ConceptNode {
 
-    private String text;
-    private int typeId;
-    private List<String> molecules;
-    private ConceptType type;
+    private final String text;
+    private final int typeId;
+    private final List<String> molecules;
+    private final ConceptType type;
 
-    public ConceptNode(String text, ConceptType type, int tid) {
+    public ConceptNode(String text, ConceptType type, int tid, ArrayList<String> molecules) {
         this.text = text;
         this.typeId = tid;
-        this.molecules = new ArrayList<>();
+        this.molecules = molecules;
         this.type = type;
     }
 
@@ -80,5 +80,12 @@ public class ConceptNode {
      */
     public ConceptType getType() {
         return type;
+    }
+    
+    public boolean containsMolecule(String molecule) {
+        for (String mol : molecules) {
+            if (mol.equals(molecule)) return true;
+        }
+        return false;
     }
 }

@@ -26,31 +26,51 @@
 package parser;
 
 import frame.AFrame;
+import frame.SVOFrame;
 import memory.Memory;
+import memory.node.definition.POS;
+import memory.node.definition.WordDefinitionNode;
 
 /**
  * QueryParser class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:04:39 PM, Nov 7, 2013 
- * Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:04:39 PM,
+ * Nov 7, 2013 Description:
  */
-public class QueryParser implements IParser {
-    public final Memory memory;
-    public AFrame frame;
-    
+public class QueryParser extends AParser implements IParser {
+
+    public AFrame[] frames;
+
     public QueryParser(Memory memory) {
-        this.memory = memory;
+        super(memory);
     }
 
     @Override
     public void parse(String text) {
-        
-        
-        
-        
+        text = cleanString(text);
+        WordDefinitionNode[][] tokenizedSentences = tokenizeSentence(text);
+        frames = new AFrame[tokenizedSentences.length];
+        for (int i=0; i<tokenizedSentences.length; i++)
+            frames[i] = processSimpleQuery(text, tokenizedSentences[i]);
     }
 
-    public AFrame getFrame() {
+    private AFrame processSimpleQuery(String text, WordDefinitionNode[] words) {
+        AFrame frame = new SVOFrame();
+        for (WordDefinitionNode word : words) {
+            if (word.getPos().equals(POS.Det) && ((SVOFrame) frame).getObject() == null) {
+                ((SVOFrame) frame).setObject(text.split(word.getTrigger())[0]);
+            }
+            if (word.getPos().equals(POS.V) && words[words.length - 1].equals(word)) {
+                ((SVOFrame) frame).setVerb(word.getTrigger());
+                String sub = (text.replaceAll(word.getTrigger(), ""));
+                sub = sub.replaceAll(((SVOFrame) frame).getObject(), "");
+                ((SVOFrame) frame).setSubject(sub);
+            }
+        }
         return frame;
+    }
+
+    public AFrame[] getFrames() {
+        return frames;
     }
 }

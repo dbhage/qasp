@@ -28,10 +28,12 @@ package qasp;
 import forms.QASPFrame;
 import session.SessionManager;
 import controller.ConversationController;
+import controller.ConversationRepresentationController;
 import controller.MenuController;
 import controller.StatisticsController;
 import db.DatabaseConnection;
 import db.IDatabaseConnection;
+import java.io.PrintStream;
 
 /**
  * QASP class.
@@ -63,6 +65,13 @@ public class QASP {
 
         // create menu controller
         MenuController menuController = new MenuController(qaspFrame, model);
+
+        // conversation representation controller
+        ConversationRepresentationController crController
+                = new ConversationRepresentationController(qaspFrame.
+                        getConversationRepresentationPanel().getMetaDataTextArea());
+    
+        System.setOut(new PrintStream(crController));
     }
 
     public static void populateDatabase(String filename) {
@@ -76,12 +85,8 @@ public class QASP {
         }
         dbConn.closeConnection();
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        QASP.populateDatabase("populate.sql");
+
+    public static void startApp() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -106,7 +111,6 @@ public class QASP {
         //</editor-fold>
 
         /* Create and display the form */
-        /*
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -114,6 +118,20 @@ public class QASP {
                 qFrame.setVisible(true);
                 QASP qaspApp = new QASP(qFrame);
             }
-        });*/
+        });
+
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        //QASP.populateDatabase("populatePrimesTable.sql");
+        QASP.startApp();
+        /*
+        String[] currPrimes = "MARJAWAN".split("[^A-Z]");
+        for (String s : currPrimes) {
+            System.out.println(s);
+        }*/
     }
 }

@@ -25,12 +25,41 @@
  */
 package controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+
 /**
  * ConversationRepresentationController class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:53:12 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:53:12 PM, Nov 7, 2013 
+ * Description:
  */
-public class ConversationRepresentationController {
+public class ConversationRepresentationController extends OutputStream {
 
+    private final JTextArea metaDataTextArea;
+
+    public ConversationRepresentationController(JTextArea destination) {
+        if (destination == null) {
+            throw new IllegalArgumentException("Destination is null");
+        }
+        this.metaDataTextArea = destination;
+    }
+
+    @Override
+    public void write(byte[] buffer, int offset, int length) throws IOException {
+        final String text = new String(buffer, offset, length);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                metaDataTextArea.append(text);
+            }
+        });
+    }
+
+    @Override
+    public void write(int b) throws IOException {
+        write(new byte[]{(byte) b}, 0, 1);
+    }
 }

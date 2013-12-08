@@ -49,7 +49,7 @@ public class Session {
     private final IDatabaseConnection dbConn;
     
     public Session(String sid, IDatabaseConnection dbConn) {
-        memory = new Memory();
+        this.memory = new Memory();
         this.sessionID = sid;
         this.startTime = System.currentTimeMillis();
         this.live = false;
@@ -177,7 +177,7 @@ public class Session {
         // add to memory
         memory.addDefinitionNode(word, definition, POS.stringToPOS(pos));
         // add to database
-        String insert = "INSERT INTO definition VALUES(" 
+        String insert = "INSERT INTO definition (trig, primerep, pos, type) VALUES(" 
                 + "\'" + word + "\',"
                 + "\'" + definition + "\',"
                 + "\'" + pos + "\',"

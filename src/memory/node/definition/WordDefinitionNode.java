@@ -32,7 +32,7 @@ public class WordDefinitionNode extends DefinitionNode {
     public WordDefinitionNode(String trigger, String primeRep, POS pos) {
         super(trigger, primeRep);
         if (pos == null) {
-            throw new NullPointerException("Creating word " + trigger + " a null POS");
+            throw new NullPointerException("Creating word \"" + trigger + "\" a null POS");
         }
         this.pos = pos;
     }
@@ -42,5 +42,9 @@ public class WordDefinitionNode extends DefinitionNode {
      */
     public POS getPos() {
         return pos;
+    }
+    
+    public boolean isVerb() {
+        return pos.equals(POS.V);
     }
 }

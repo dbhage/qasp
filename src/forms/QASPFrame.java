@@ -53,8 +53,8 @@ public class QASPFrame extends javax.swing.JFrame {
 
         statisticsPanel1 = new forms.StatisticsPanel();
         conversationPanel = new forms.ConversationPanel();
-        conversationRepresentationPanel = new forms.ConversationRepresentationPanel();
         statisticsPanel = new forms.StatisticsPanel();
+        conversationRepresentationPanel = new forms.ConversationRepresentationPanel();
         menuBar = new javax.swing.JMenuBar();
         file = new javax.swing.JMenu();
         saveSessionMenuItem = new javax.swing.JMenuItem();
@@ -68,20 +68,9 @@ public class QASPFrame extends javax.swing.JFrame {
 
         conversationPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        conversationRepresentationPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout conversationRepresentationPanelLayout = new javax.swing.GroupLayout(conversationRepresentationPanel);
-        conversationRepresentationPanel.setLayout(conversationRepresentationPanelLayout);
-        conversationRepresentationPanelLayout.setHorizontalGroup(
-            conversationRepresentationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
-        );
-        conversationRepresentationPanelLayout.setVerticalGroup(
-            conversationRepresentationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         statisticsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        conversationRepresentationPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         file.setText("Session");
 
@@ -122,18 +111,19 @@ public class QASPFrame extends javax.swing.JFrame {
                 .addComponent(statisticsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(conversationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(conversationRepresentationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(conversationRepresentationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(conversationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(statisticsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(conversationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(statisticsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(15, 15, 15))
         );
 

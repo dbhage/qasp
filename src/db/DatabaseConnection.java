@@ -90,8 +90,6 @@ public class DatabaseConnection implements IDatabaseConnection {
             throw new NullPointerException("Trying to execute query when Connection is null.");
         }
         
-        System.out.println("Attempting to execute query: " + query);
-        
         Statement statement;
         ResultSet resultSet = null;
         try {
@@ -103,7 +101,6 @@ public class DatabaseConnection implements IDatabaseConnection {
             System.exit(-1);
         }
         
-        System.out.println("Query successful.");
         return resultSet;
     }
 
@@ -112,7 +109,6 @@ public class DatabaseConnection implements IDatabaseConnection {
         if (connection==null) {
             throw new NullPointerException("Trying to execute query when Connection is null.");
         }
-        System.out.println("Attempting to execute: " + insert);
         
         Statement statement;
         try {
@@ -123,7 +119,6 @@ public class DatabaseConnection implements IDatabaseConnection {
             System.err.println("Stack trace:\n" + ex.toString());
             System.exit(-1);
         }
-        System.out.println("INSERT successful");
     }
 }
 

@@ -86,7 +86,7 @@ public class StatisticsPanel extends javax.swing.JPanel {
 
         noOfNodesLabel.setText("No. of Nodes: ");
 
-        noOfNodesLabelConvo.setText("No. of Nodes: ");
+        noOfNodesLabelConvo.setText("No. of Concepts: ");
 
         sessionStartDateLabel.setText("Start Date: ");
 

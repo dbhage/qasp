@@ -78,6 +78,7 @@ public class Conversation {
      */
     public void addConceptNode(ConceptNode conceptNode) {
         concepts.add(conceptNode);
+        noOfNodes++;
     }
 
     /**

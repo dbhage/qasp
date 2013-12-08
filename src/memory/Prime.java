@@ -33,9 +33,16 @@ package memory;
  */
 public class Prime {
 
-    private String prime;
-    private int valency;
+    private final String prime;
+    private final String category;
+    private final int valency;
 
+    public Prime(String p, String c, int v) {
+        this.prime = p;
+        this.category = c;
+        this.valency = v;
+    }
+    
     /**
      * @return the prime
      */
@@ -48,5 +55,12 @@ public class Prime {
      */
     public int getValency() {
         return valency;
+    }
+
+    /**
+     * @return the category
+     */
+    public String getCategory() {
+        return category;
     }
 }

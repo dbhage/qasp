@@ -162,7 +162,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="noOfNodesLabelConvo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="No. of Nodes: "/>
+        <Property name="text" type="java.lang.String" value="No. of Concepts: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="noOfNodesTextFieldConvo">

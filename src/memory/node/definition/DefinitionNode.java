@@ -25,8 +25,8 @@
  */
 package memory.node.definition;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.regex.*;
 
 /**
  * DefinitionNode class.
@@ -37,11 +37,20 @@ import java.util.LinkedList;
 public class DefinitionNode {
 
     private final String trigger;
-    private String primeRepresentation;
+    private final String primeRepresentation;
+    private final String[] molecules;
     
     public DefinitionNode(String trigger, String primeRep) {
         this.trigger = trigger;
         this.primeRepresentation = primeRep;
+        
+        ArrayList<String> moleculeList = new ArrayList<>();
+        Pattern pattern = Pattern.compile("#[a-z]+");
+        Matcher matcher = pattern.matcher(primeRep);
+        while (matcher.find()) {
+            moleculeList.add(matcher.group());
+        }
+        this.molecules = moleculeList.toArray(new String[moleculeList.size()]);
     }
 
     public boolean isMolecule() {
@@ -60,5 +69,12 @@ public class DefinitionNode {
      */
     public String getPrimeRepresentation() {
         return primeRepresentation;
+    }
+
+    /**
+     * @return the molecules
+     */
+    public String[] getMolecules() {
+        return molecules;
     }
 }

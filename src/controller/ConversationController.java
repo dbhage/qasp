@@ -36,8 +36,8 @@ import javax.swing.WindowConstants;
 /**
  * ConversationController class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:52:27 PM,
- Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:52:27 PM, Nov 7, 2013 
+ * Description:
  */
 public class ConversationController {
 
@@ -85,7 +85,6 @@ public class ConversationController {
                 if (!model.wordExists(word)) {
                     // show get word dialog box
                     dialog = new AskForWordDialog(view, true, word);
-                    
                     dialog.getSubmitButton().addActionListener(new SubmitButtonActionListener());
                     dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                     dialog.setVisible(true);

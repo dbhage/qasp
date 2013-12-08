@@ -52,9 +52,9 @@ public class InputHandler {
         }
     }
     
-    public AFrame getFrame() {
+    public AFrame[] getFrames() {
         if (parser instanceof QueryParser) {
-            return ((QueryParser)parser).getFrame();
+            return ((QueryParser)parser).getFrames();
         }
         return null;
     }

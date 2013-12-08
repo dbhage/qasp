@@ -43,8 +43,8 @@ public class QueryHandler {
     private ICMA icma;
     private QueryResult queryResult;
 
-    public void handleQuery(AFrame frame, CMAType cType, Memory memory) {
-        if (frame == null || cType == null || memory == null) {
+    public void handleQuery(AFrame[] frames, CMAType cType, Memory memory) {
+        if (frames == null || cType == null || memory == null) {
             throw new NullPointerException("null parameters being passed to QueryHandler.queryHandler");
         }
         
@@ -53,8 +53,8 @@ public class QueryHandler {
         } else if (cType.equals(CMAType.TWO)) {
             icma = new CMA2();
         } 
-        
-        queryResult = icma.search(frame, memory);
+        for (AFrame frame : frames)
+            queryResult = icma.search(frame, memory);
     }
 
     public QueryResult getResult() {

@@ -63,22 +63,22 @@ public class Memory {
     /**
      * list of all definition nodes
      */
-    private HashMap<String, DefinitionNode> defNodes;
+    private HashMap<String, List<DefinitionNode>> defNodes;
 
     /**
      * list of text definition nodes
      */
-    private HashMap<String, DefinitionNode> textNodes;
+    private HashMap<String, List<DefinitionNode>> textNodes;
 
     /**
      * list of word definition nodes
      */
-    private HashMap<String, WordDefinitionNode> wordNodes;
+    private HashMap<String, List<WordDefinitionNode>> wordNodes;
 
     /**
      * list of verb nodes
      */
-    private HashMap<String, WordDefinitionNode> verbNodes;
+    private HashMap<String, List<WordDefinitionNode>> verbNodes;
 
     /**
      * list of all concepts
@@ -88,7 +88,7 @@ public class Memory {
     /**
      * array of semantic primes
      */
-    private static Prime[] primes;
+    public static Prime[] primes;
 
     /**
      * list of conversations
@@ -101,11 +101,6 @@ public class Memory {
     private HashMap<String, List<ConceptNode>> moleculesToConceptMap;
 
     /**
-     * no of primes
-     */
-    private static int noOfPrimes;
-
-    /**
      * This will be used to link concepts, events and states.
      */
     private int conceptNo;
@@ -116,18 +111,17 @@ public class Memory {
     private Conversation currentConversation;
 
     public Memory() {
-        eventNodes = new HashMap();
-        stateNodes = new HashMap();
-        moleculeNodes = new HashMap();
-        defNodes = new HashMap();
-        textNodes = new HashMap();
-        wordNodes = new HashMap();
-        verbNodes = new HashMap();
-        allConcepts = new HashMap();
-        primes = new Prime[noOfPrimes];
-        conversations = new ArrayList();
-        moleculesToConceptMap = new HashMap();
-        conceptNo = 1;
+        this.eventNodes = new HashMap();
+        this.stateNodes = new HashMap();
+        this.moleculeNodes = new HashMap();
+        this.defNodes = new HashMap();
+        this.textNodes = new HashMap();
+        this.wordNodes = new HashMap();
+        this.verbNodes = new HashMap();
+        this.allConcepts = new HashMap();
+        this.conversations = new ArrayList();
+        this.moleculesToConceptMap = new HashMap();
+        this.conceptNo = 0;
     }
 
     /**
@@ -149,15 +143,33 @@ public class Memory {
      * @return <code>true</code> if node successfully added, <code>false</code>
      * otherwise.
      */
-    public boolean addDefinitionNode(String trigger, String primeRep, POS pos) {
-        if (primeRep == null) throw new NullPointerException("Prime rep for " + trigger + " is null.");
+    public boolean addDefinitionNode(String trigger, String primeRep, POS pos) throws NullPointerException {
+        if (primeRep == null) {
+            throw new NullPointerException("Prime rep for " + trigger + " is null.");
+        }
         DefinitionNode node;
         if (trigger.split(" ").length == 1) {
             // its a word
             node = new WordDefinitionNode(trigger, primeRep, pos);
-            wordNodes.put(trigger, (WordDefinitionNode) node);
+
+            // if a list does not already exist, create one with a WordDefNode and add it 
+            // to the map else, just add to the list corresponding to the trigger
+            if (wordNodes.get(trigger) == null) {
+                ArrayList<WordDefinitionNode> list = new ArrayList<>();
+                list.add((WordDefinitionNode) node);
+                wordNodes.put(trigger, list);
+            } else {
+                wordNodes.get(trigger).add((WordDefinitionNode) node);
+            }
+
             if (pos.equals(POS.V)) {
-                verbNodes.put(trigger,(WordDefinitionNode) node);
+                if (verbNodes.get(trigger) == null) {
+                    ArrayList<WordDefinitionNode> list = new ArrayList<>();
+                    list.add((WordDefinitionNode) node);
+                    verbNodes.put(trigger, list);
+                } else {
+                    verbNodes.get(trigger).add((WordDefinitionNode) node);
+                }
             }
         } else {
             node = new DefinitionNode(trigger, primeRep);
@@ -166,33 +178,52 @@ public class Memory {
                 moleculeNodes.put(trigger, node);
             } else {
                 // its a text
-                textNodes.put(trigger, node);
+                if (textNodes.get(trigger) == null) {
+                    ArrayList<DefinitionNode> list = new ArrayList<>();
+                    list.add((DefinitionNode) node);
+                    textNodes.put(trigger, list);
+                } else {
+                    textNodes.get(trigger).add(node);
+                }
             }
         }
-        defNodes.put(trigger, node);
+
+        if (defNodes.get(trigger) == null) {
+            ArrayList<DefinitionNode> list = new ArrayList<>();
+            list.add((DefinitionNode) node);
+            defNodes.put(trigger, list);
+        } else {
+            defNodes.get(trigger).add(node);
+        }
         return true;
     }
 
-    public void addConceptNode(String text, ConceptType type) {
-        allConcepts.put(conceptNo, new ConceptNode(text, type, conceptNo));
+    public void addConceptNode(String text, ConceptType type, ArrayList<String> molecules) {
         conceptNo++;
+        ConceptNode conceptNode = new ConceptNode(text, type, conceptNo, molecules);
+        System.out.println("Adding Concept Node #" + conceptNo);
+        allConcepts.put(conceptNo, conceptNode);
+        currentConversation.addConceptNode(conceptNode);
     }
 
     public void addStateNode(String c) {
+        System.out.println("Adding State Node #" + conceptNo);
         stateNodes.put(conceptNo, new StateNode(conceptNo, c));
     }
 
     public void addEventNode(String v, String o) {
+        System.out.println("Adding Event Node #" + conceptNo);
         eventNodes.put(conceptNo, new EventNode(conceptNo, v, o));
     }
 
-    public DefinitionNode getDefinitionNode(String trigger) {
+    public List<DefinitionNode> getDefinitionNodes(String trigger) {
         return defNodes.get(trigger);
     }
 
     public long getCurrentConversationStartTime() {
-        if (currentConversation == null)
+        if (currentConversation == null) {
             return 0;
+        }
         return currentConversation.getTimeStarted();
     }
 
@@ -205,13 +236,18 @@ public class Memory {
     }
 
     public void startConversation() {
+        System.out.println("Starting Conversation #" + (conversations.size() + 1));
         currentConversation = new Conversation(conversations.size() + 1);
         conversations.add(currentConversation);
     }
 
     public void endCurrentConversation() {
-        if (currentConversation != null) currentConversation.endConversation();
-        else System.out.println("currentConversatoin null.");
+        if (currentConversation != null) {
+            System.out.println("Ending conversation #" + currentConversation.getNo());
+            currentConversation.endConversation();
+        } else {
+            System.out.println("currentConversation null.");
+        }
     }
 
     public ConceptNode getConcept(int id) {
@@ -221,7 +257,7 @@ public class Memory {
     public DefinitionNode getMoleculeNode(String trig) {
         return moleculeNodes.get(trig);
     }
-    
+
     public boolean isEmpty() {
         if (eventNodes.isEmpty() && stateNodes.isEmpty() && moleculeNodes.isEmpty()
                 && defNodes.isEmpty() && textNodes.isEmpty() && wordNodes.isEmpty()
@@ -234,20 +270,20 @@ public class Memory {
             return true;
         }
         return false;
-    }    
+    }
 
     public int getNoOfNodesInConversation() {
-        if (currentConversation == null)
+        if (currentConversation == null) {
             return 0;
+        }
         return currentConversation.getNoOfNodes();
     }
 
     public boolean wordExists(String word) {
         return (wordNodes.get(word) != null);
     }
-    
+
     /* getters and setters for fields */
-    
     /**
      * @return the eventNodes
      */
@@ -294,13 +330,17 @@ public class Memory {
      * @return the defNodes
      */
     public Collection<DefinitionNode> getDefNodes() {
-        return defNodes.values();
+        Collection<DefinitionNode> coll = new ArrayList<>();
+        for (List<DefinitionNode> nodeLists : defNodes.values()) {
+            coll.addAll(coll);
+        }
+        return coll;
     }
 
     /**
      * @param defNodes the defNodes to set
      */
-    public void setDefNodes(HashMap<String, DefinitionNode> defNodes) {
+    public void setDefNodes(HashMap<String, List<DefinitionNode>> defNodes) {
         this.defNodes = defNodes;
     }
 
@@ -308,42 +348,11 @@ public class Memory {
      * @return the textNodes
      */
     public Collection<DefinitionNode> getTextNodes() {
-        return textNodes.values();
-    }
-
-    /**
-     * @param textNodes the textNodes to set
-     */
-    public void setTextNodes(HashMap<String, DefinitionNode> textNodes) {
-        this.textNodes = textNodes;
-    }
-
-    /**
-     * @return the wordNodes
-     */
-    public Collection<WordDefinitionNode> getWordNodes() {
-        return wordNodes.values();
-    }
-
-    /**
-     * @param wordNodes the wordNodes to set
-     */
-    public void setWordNodes(HashMap<String, WordDefinitionNode> wordNodes) {
-        this.wordNodes = wordNodes;
-    }
-
-    /**
-     * @return the verbNodes
-     */
-    public Collection<WordDefinitionNode> getVerbNodes() {
-        return verbNodes.values();
-    }
-
-    /**
-     * @param verbNodes the verbNodes to set
-     */
-    public void setVerbNodes(HashMap<String, WordDefinitionNode> verbNodes) {
-        this.verbNodes = verbNodes;
+        Collection<DefinitionNode> coll = new ArrayList<>();
+        for (List<DefinitionNode> nodeLists : textNodes.values()) {
+            coll.addAll(coll);
+        }
+        return coll;
     }
 
     /**
@@ -402,17 +411,67 @@ public class Memory {
         return currentConversation;
     }
 
-    /**
-     * @param aPrimes the primes to set
-     */
-    public static void setPrimes(Prime[] aPrimes) {
-        primes = aPrimes;
+    public EventNode getEvent(int typeId) {
+        return eventNodes.get(typeId);
     }
 
     /**
-     * @return the noOfPrimes
+     * @return the wordNodes
      */
-    public static int getNoOfPrimes() {
-        return noOfPrimes;
-    }    
+    public Collection<WordDefinitionNode> getWordNodes() {
+        Collection<WordDefinitionNode> coll = new ArrayList<>();
+        for (List<WordDefinitionNode> list : wordNodes.values()) {
+            coll.addAll(list);
+        }
+        return coll;
+    }
+
+    public List<WordDefinitionNode> getWordNodes(String trigger) {
+        return wordNodes.get(trigger);
+    }
+    
+    /**
+     * @param wordNodes the wordNodes to set
+     */
+    public void setWordNodes(HashMap<String, List<WordDefinitionNode>> wordNodes) {
+        this.wordNodes = wordNodes;
+    }
+
+    /**
+     * @return the verbNodes
+     */
+    public HashMap<String, List<WordDefinitionNode>> getVerbNodes() {
+        return verbNodes;
+    }
+
+    /**
+     * @param verbNodes the verbNodes to set
+     */
+    public void setVerbNodes(HashMap<String, List<WordDefinitionNode>> verbNodes) {
+        this.verbNodes = verbNodes;
+    }
+
+    /**
+     * @param textNodes the textNodes to set
+     */
+    public void setTextNodes(HashMap<String, List<DefinitionNode>> textNodes) {
+        this.textNodes = textNodes;
+    }
+
+    public boolean hasDefinitionNode(String subject, String primeDef) {
+        List<DefinitionNode> nodes = defNodes.get(subject);
+        if (nodes == null || nodes.isEmpty()) {
+            return false;
+        }
+        
+        for (DefinitionNode def : nodes) {
+            if (def.getPrimeRepresentation().equals(primeDef)) return true;
+        }
+        
+        return false;
+    }
+    
+    public DefinitionNode getDefinitionNode(String s) {
+        return defNodes.get(s).get(0);
+    }
 }

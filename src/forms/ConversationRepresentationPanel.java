@@ -36,6 +36,7 @@ public class ConversationRepresentationPanel extends javax.swing.JPanel {
      */
     public ConversationRepresentationPanel() {
         initComponents();
+        metaDataTextArea.setEditable(false);
     }
 
     /**
@@ -47,18 +48,46 @@ public class ConversationRepresentationPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        metaDataTextArea = new javax.swing.JTextArea();
+
+        setPreferredSize(new java.awt.Dimension(393, 401));
+
+        metaDataTextArea.setColumns(20);
+        metaDataTextArea.setRows(5);
+        jScrollPane1.setViewportView(metaDataTextArea);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 387, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(15, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(17, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 405, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea metaDataTextArea;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the metaDataTextArea
+     */
+    public javax.swing.JTextArea getMetaDataTextArea() {
+        return metaDataTextArea;
+    }
 }

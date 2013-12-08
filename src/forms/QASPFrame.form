@@ -79,9 +79,9 @@
               <Component id="statisticsPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="conversationPanel" min="-2" pref="437" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="conversationRepresentationPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -89,10 +89,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="19" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="conversationRepresentationPanel" max="32767" attributes="0"/>
-                  <Component id="conversationPanel" max="32767" attributes="0"/>
-                  <Component id="statisticsPanel" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="conversationPanel" max="32767" attributes="0"/>
+                      <Component id="statisticsPanel" alignment="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
@@ -109,7 +111,7 @@
         </Property>
       </Properties>
     </Component>
-    <Container class="forms.ConversationRepresentationPanel" name="conversationRepresentationPanel">
+    <Component class="forms.StatisticsPanel" name="statisticsPanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
@@ -117,21 +119,8 @@
           </Border>
         </Property>
       </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="316" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-    </Container>
-    <Component class="forms.StatisticsPanel" name="statisticsPanel">
+    </Component>
+    <Component class="forms.ConversationRepresentationPanel" name="conversationRepresentationPanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">

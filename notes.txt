@@ -7,3 +7,5 @@
 
 11/28/2013  - alter table definition modify pos enum('N', 'V', 'P', 'Det', 'NP', 'PP', 'S', 'O', 'Q');
 
+12/7/2013 - need more than one def node for a word since a word could have different definitions
+            so we'll now have a trigger and an associated list of nodes for it in memory :)

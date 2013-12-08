@@ -32,6 +32,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import memory.Memory;
+import memory.Prime;
 import parser.InputHandler;
 import parser.ParserType;
 import query.QueryHandler;
@@ -42,7 +46,7 @@ import util.DateUtil;
  * SessionManager class.
  *
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:28 PM,
- Nov 7, 2013 Description:
+ * Nov 7, 2013 Description:
  */
 public class SessionManager {
 
@@ -56,6 +60,13 @@ public class SessionManager {
         dbConn.establishConnection();
         inputHandler = new InputHandler();
         queryHandler = new QueryHandler();
+        
+        try {
+            loadPrimes();
+        } catch (SQLException ex) {
+            System.err.println("SQLException when trying to load primes.");
+            System.exit(-1);
+        }
     }
 
     public void createSession() {
@@ -69,11 +80,11 @@ public class SessionManager {
     }
 
     public void handleText(String text) {
-        
+
         if (!currentSession.isLive()) {
             currentSession.startConversation();
         }
-        
+
         inputHandler.handleText(text, ParserType.SENTENCE, currentSession.getMemory());
     }
 
@@ -81,9 +92,9 @@ public class SessionManager {
         if (!currentSession.isLive()) {
             currentSession.startConversation();
         }
-        
+
         inputHandler.handleText(text, ParserType.QUERY, currentSession.getMemory());
-        queryHandler.handleQuery(inputHandler.getFrame(), CMAType.ONE, currentSession.getMemory());
+        queryHandler.handleQuery(inputHandler.getFrames(), CMAType.ONE, currentSession.getMemory());
         return queryHandler.getResult().toString();
     }
 
@@ -197,8 +208,28 @@ public class SessionManager {
         }
         currentSession.saveNewWord(word, definition, pos);
     }
-    
+
     public void disconnectFromDatabase() {
         dbConn.closeConnection();
+    }
+
+    private void loadPrimes() throws SQLException {
+        ArrayList<Prime> primes = new ArrayList<>();
+        String query = "SELECT * FROM primes;";
+        ResultSet rs = dbConn.executeQuery(query);
+
+        if (rs == null) {
+            System.err.println("null ResultSet object when executing query: " + query);
+            System.exit(-1);
+        } else {
+            while (rs.next()) {
+                String text = rs.getString("text");
+                String category = rs.getString("category");
+                int valency = Integer.parseInt(rs.getString("valency"));
+                primes.add(new Prime(text, category, valency));
+            }
+
+            Memory.primes = primes.toArray(new Prime[primes.size()]);
+        }
     }
 }

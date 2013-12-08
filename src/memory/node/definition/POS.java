@@ -33,7 +33,7 @@ package memory.node.definition;
  */
 public enum POS {
 
-    V, N, P, Det, NP, PP, S, O;
+    V, N, P, Det, NP, PP, S, O, Q;
 
     @Override
     public String toString() {
@@ -58,6 +58,8 @@ public enum POS {
                 return POS.S;
             case "O":
                 return POS.O;
+            case "Q":
+                return POS.Q;
             default:
                 return null;
         }
