@@ -23,7 +23,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package session;
 
 import db.IDatabaseConnection;
@@ -35,8 +34,8 @@ import memory.node.definition.POS;
 /**
  * Session class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:18 PM, Nov 7, 2013 
- * Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:18 PM,
+ * Nov 7, 2013 Description:
  */
 public class Session {
 
@@ -47,7 +46,7 @@ public class Session {
     private long endTime;
     private boolean live;
     private final IDatabaseConnection dbConn;
-    
+
     public Session(String sid, IDatabaseConnection dbConn) {
         this.memory = new Memory();
         this.sessionID = sid;
@@ -57,7 +56,6 @@ public class Session {
     }
 
     /* getters and setters */
-    
     /**
      * @return the sessionID
      */
@@ -114,7 +112,6 @@ public class Session {
     public void setEndTime(long endTime) {
         this.endTime = endTime;
     }
-    
 
     public int getNoOfNodesInCurrentConversation() {
         return memory.getNoOfNodesInConversation();
@@ -177,13 +174,13 @@ public class Session {
         // add to memory
         memory.addDefinitionNode(word, definition, POS.stringToPOS(pos));
         // add to database
-        String insert = "INSERT INTO definition (trig, primerep, pos, type) VALUES(" 
+        String insert = "INSERT INTO definition (trig, primerep, pos, type) VALUES("
                 + "\'" + word + "\',"
                 + "\'" + definition + "\',"
                 + "\'" + pos + "\',"
                 + "\'" + "word" + "\');";
-        
-       dbConn.executeInsert(insert);
+
+        dbConn.executeInsert(insert);
     }
 
     public void startConversation() {

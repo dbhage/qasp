@@ -23,15 +23,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package query.cma;
 
 /**
  * CMAType Enum.
- * @author Dwijesh Bhageerutty, neerav789@gmail.com
- * Date created: 3:54:04 PM, Nov 24, 2013
- * Description: 
+ *
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 3:54:04 PM,
+ * Nov 24, 2013 Description:
  */
 public enum CMAType {
-    ONE,TWO;
+
+    ONE, TWO;
 }

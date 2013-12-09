@@ -42,7 +42,7 @@ public class Prime {
         this.category = c;
         this.valency = v;
     }
-    
+
     /**
      * @return the prime
      */

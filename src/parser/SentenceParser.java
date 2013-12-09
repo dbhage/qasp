@@ -55,12 +55,24 @@ public class SentenceParser extends AParser implements IParser {
             if (!(text.contains(" and ") || text.contains(" or "))) {
                 // simple sentence
                 AFrame frame = processSimpleSentence(text, tokenizedSentence, false);
-                populateMemory(((SVOFrame) frame).getSubject(), (SVOFrame) frame, tokenizedSentence);
+                populateMemory((SVOFrame) frame, tokenizedSentence);
             } else if (text.contains(" and ") && !text.contains(" or ")) {
                 try {
                     processAndCase1(text, tokenizedSentence);
                 } catch (IllegalArgumentException e) {
-                    processAndCase2(text, tokenizedSentence);
+                    try {
+                        processAndCase2(text, tokenizedSentence);
+                    } catch (IllegalArgumentException e1) {
+                        try {
+                            processAndCase3(text, tokenizedSentence);
+                        } catch (IllegalArgumentException e2) {
+                            try {
+                                processAndCase4(text, tokenizedSentence);
+                            } catch (IllegalArgumentException e3) {
+                                processAndCase5(text, tokenizedSentence);
+                            }
+                        }
+                    }
                 }
             } else {
                 throw new UnsupportedOperationException("not supported yet");
@@ -75,38 +87,42 @@ public class SentenceParser extends AParser implements IParser {
      * @param sentence
      * @return
      */
-    private AFrame processSimpleSentence(String text, WordDefinitionNode[] sentence, boolean t) 
+    private AFrame processSimpleSentence(String text, WordDefinitionNode[] sentence, boolean t)
             throws IllegalArgumentException {
-        String tab;
-        if (t) {
-            tab = "  ";
-        } else {
-            tab = "";
-        }
-
-        System.out.println(tab + "Attempting to apply processSimpleSentence.");
-
-        SVOFrame svoFrame = new SVOFrame();
-        for (WordDefinitionNode word : sentence) {
-            if (word.getPos().equals(POS.V)) {
-                svoFrame.setVerb(word.getTrigger());
+        try {
+            String tab;
+            if (t) {
+                tab = "  ";
+            } else {
+                tab = "";
             }
-        }
-        svoFrame.setSubject(text.split(svoFrame.getVerb())[0]);
-        String o = text.split(svoFrame.getVerb())[1];
-        if (o.startsWith(" ")) {
-            svoFrame.setObject(o.substring(1, o.length()));
-        } else {
-            svoFrame.setObject(o);
-        }
 
-        if (svoFrame.getSubject().isEmpty()) {
-            throw new IllegalArgumentException("Subject is empty");
+            System.out.println(tab + "Attempting to apply processSimpleSentence.");
+
+            SVOFrame svoFrame = new SVOFrame();
+            for (WordDefinitionNode word : sentence) {
+                if (word.getPos().equals(POS.V)) {
+                    svoFrame.setVerb(word.getTrigger());
+                }
+            }
+            svoFrame.setSubject(text.split(svoFrame.getVerb())[0]);
+            String o = text.split(svoFrame.getVerb())[1];
+            if (o.startsWith(" ")) {
+                svoFrame.setObject(o.substring(1, o.length()));
+            } else {
+                svoFrame.setObject(o);
+            }
+
+            if (svoFrame.getSubject().isEmpty() || svoFrame.getVerb().isEmpty()) {
+                throw new IllegalArgumentException("Subject is empty");
+            }
+
+            System.out.println(tab + "Generated: " + svoFrame.toString());
+            System.out.println(tab + "Applied processSimpleSentence Successfully.");
+            return svoFrame;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("ProcessSimpleSentence failed.");
         }
-        
-        System.out.println(tab + "Generated: " + svoFrame.toString());
-        System.out.println(tab + "Applied processSimpleSentence Successfully.");
-        return svoFrame;
     }
 
     /**
@@ -136,69 +152,282 @@ public class SentenceParser extends AParser implements IParser {
 
             frames[0] = processSimpleSentence(parts[0], part0, true);
             frames[1] = processSimpleSentence(parts[1], part1, true);
-            
-            populateMemory(((SVOFrame) frames[0]).getSubject(), (SVOFrame) frames[0], part0);
-            populateMemory(((SVOFrame) frames[1]).getSubject(), (SVOFrame) frames[1], part1);
+
+            populateMemory((SVOFrame) frames[0], part0);
+            populateMemory((SVOFrame) frames[1], part1);
 
             System.out.println("Applied processANDcase1 successfully.");
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             System.out.println("Failed processANDcase1");
             throw new IllegalArgumentException("Failed processANDcase1");
         }
     }
 
     /**
-     * S V1 O1 and V2 O2
+     * Expected Sentence Format: S V1 O1 and V2 O2
      *
      * @param text
      * @param sentence
      * @return
      */
-    private void processAndCase2(String text, WordDefinitionNode[] sentence) {
-        System.out.println("Attempting to apply processAndCase2.");
+    private void processAndCase2(String text, WordDefinitionNode[] sentence) throws IllegalArgumentException {
+        try {
+            System.out.println("Attempting to apply processAndCase2.");
 
-        String[] parts = text.split(" and "); // split in 2
-        WordDefinitionNode[] part0, part1;
+            String[] parts = text.split(" and "); // split in 2
+            WordDefinitionNode[] part0, part1;
 
-        List<WordDefinitionNode> sentenceAsList = Arrays.asList(sentence);
+            List<WordDefinitionNode> sentenceAsList = Arrays.asList(sentence);
 
-        // first part S V1 O1
-        part0 = sentenceAsList.subList(0, parts[0].split(" ").length)
-                .toArray(new WordDefinitionNode[parts[0].split(" ").length]);
+            // first part S V1 O1
+            part0 = sentenceAsList.subList(0, parts[0].split(" ").length)
+                    .toArray(new WordDefinitionNode[parts[0].split(" ").length]);
 
-        AFrame[] frames = new AFrame[2];
-        frames[0] = processSimpleSentence(parts[0], part0, true);
+            AFrame[] frames = new AFrame[2];
+            frames[0] = processSimpleSentence(parts[0], part0, true);
 
-        // second part S V2 O2
-        List<WordDefinitionNode> part1List = new ArrayList<>();
-        List<WordDefinitionNode> s = sentenceAsList.subList(0, ((SVOFrame) frames[0]).getSubject().split(" ").length);
-        List<WordDefinitionNode> v2o2 = sentenceAsList.subList(parts[0].split(" ").length + 1, sentenceAsList.size());
-        part1List.addAll(s);
-        part1List.addAll(v2o2);
+            // second part S V2 O2
+            List<WordDefinitionNode> part1List = new ArrayList<>();
+            List<WordDefinitionNode> s = sentenceAsList.subList(0, ((SVOFrame) frames[0]).getSubject().split(" ").length);
+            List<WordDefinitionNode> v2o2 = sentenceAsList.subList(parts[0].split(" ").length + 1, sentenceAsList.size());
+            part1List.addAll(s);
+            part1List.addAll(v2o2);
 
-        part1 = part1List.toArray(new WordDefinitionNode[part1List.size()]);
+            part1 = part1List.toArray(new WordDefinitionNode[part1List.size()]);
 
-        frames[1] = processSimpleSentence(((SVOFrame) frames[0]).getSubject() + " " + parts[1], part1, true);
+            frames[1] = processSimpleSentence(((SVOFrame) frames[0]).getSubject() + " " + parts[1], part1, true);
 
-        populateMemory(((SVOFrame) frames[0]).getSubject(), (SVOFrame) frames[0], part0);
-        populateMemory(((SVOFrame) frames[1]).getSubject(), (SVOFrame) frames[1], part1);
+            populateMemory((SVOFrame) frames[0], part0);
+            populateMemory((SVOFrame) frames[1], part1);
 
-        System.out.println("Applied processANDcase2 successfully.");
+            System.out.println("Applied processANDcase2 successfully.");
+        } catch (NullPointerException e) {
+            System.out.println("Failed to apply processANDcase2.");
+            throw new IllegalArgumentException("Failed to apply processANDcase2.");
+        }
     }
 
-    private AFrame[] processAndCase3(String text, WordDefinitionNode[] sentence) {
-        throw new UnsupportedOperationException("and case 3");
+    /**
+     * Expected Sentence Format: S V O1 and O2
+     *
+     * @param text
+     * @param sentence
+     * @return
+     */
+    private void processAndCase3(String text, WordDefinitionNode[] sentence) {
+        try {
+            System.out.println("Attempting to apply processAndCase3.");
+
+            String[] parts = text.split(" and "); // split in 2
+            WordDefinitionNode[] part0, part1;
+
+            List<WordDefinitionNode> sentenceAsList = Arrays.asList(sentence);
+
+            // first part S V1 O1
+            part0 = sentenceAsList.subList(0, parts[0].split(" ").length)
+                    .toArray(new WordDefinitionNode[parts[0].split(" ").length]);
+
+            SVOFrame[] frames = new SVOFrame[2];
+            frames[0] = (SVOFrame) processSimpleSentence(parts[0], part0, true);
+
+            // second part
+            frames[1] = frames[0].clone();
+            frames[1].setObject(parts[1]);
+
+            int index = 0;
+            for (int i = 0; i < sentenceAsList.size(); i++) {
+                if (sentenceAsList.get(i).isVerb()) {
+                    index = i;
+                    break;
+                }
+            }
+
+            List<WordDefinitionNode> part1List = new ArrayList<>();
+            List<WordDefinitionNode> sv = sentenceAsList.subList(0, index + 1);
+            List<WordDefinitionNode> o2 = sentenceAsList.subList(
+                    index + frames[0].getObject().split(" ").length + 1, sentenceAsList.size());
+
+            part1List.addAll(sv);
+            part1List.addAll(o2);
+
+            part1 = part1List.toArray(new WordDefinitionNode[part1List.size()]);
+
+            populateMemory(frames[0], part0);
+            populateMemory(frames[1], part1);
+
+            System.out.println("Applied processANDcase3 successfully.");
+        } catch (NullPointerException e) {
+            System.out.println("Failed to apply processANDcase3.");
+            throw new IllegalArgumentException("Failed to apply processANDcase2.");
+        }
     }
 
-    private AFrame[] processAndCase4(String text, WordDefinitionNode[] sentence) {
-        throw new UnsupportedOperationException("and case 4");
+    /**
+     * Expected Format: S1 and S2 V O
+     *
+     * @param text
+     * @param sentence
+     * @return
+     * @throws IllegalArgumentException
+     */
+    private void processAndCase4(String text, WordDefinitionNode[] sentence) throws IllegalArgumentException {
+        try {
+            System.out.println("Attempting to apply processAndCase4.");
+
+            String[] parts = text.split(" and "); // split in 2
+            WordDefinitionNode[] part0, part1;
+
+            List<WordDefinitionNode> sentenceAsList = Arrays.asList(sentence);
+
+            // second part S2 V O
+            part1 = sentenceAsList.subList(parts[0].split(" ").length + 1, sentence.length)
+                    .toArray(new WordDefinitionNode[parts[1].split(" ").length]);
+
+            SVOFrame[] frames = new SVOFrame[2];
+            frames[1] = (SVOFrame) processSimpleSentence(parts[1], part1, true);
+
+            // first part S1 V O
+            frames[0] = frames[1].clone();
+            frames[1].setSubject(parts[0]);
+            List<WordDefinitionNode> s1 = sentenceAsList.subList(0, parts[0].split(" ").length);
+
+            int index = 0;
+            for (int i = 0; i < sentenceAsList.size(); i++) {
+                if (sentenceAsList.get(i).isVerb()) {
+                    index = i;
+                    break;
+                }
+            }
+            List<WordDefinitionNode> vo = sentenceAsList.subList(index, sentenceAsList.size());
+
+            List<WordDefinitionNode> part0List = new ArrayList<>();
+            part0List.addAll(s1);
+            part0List.addAll(vo);
+
+            part0 = part0List.toArray(new WordDefinitionNode[part0List.size()]);
+
+            // populate
+            populateMemory(frames[0], part0);
+            populateMemory(frames[1], part1);
+
+            System.out.println("Applied processANDcase4 successfully.");
+        } catch (NullPointerException e) {
+            System.out.println("Failed to apply processANDcase4.");
+            throw new IllegalArgumentException("Failed to apply processANDcase2.");
+        }
     }
 
-    private AFrame[] processAndCase5(String text, WordDefinitionNode[] sentence) {
-        throw new UnsupportedOperationException("and case 5");
+    /**
+     * Expected Format: S V1 and V2 O Need to deal with verb valency here. Can
+     * end up with frame(s,v1,o) and frame(s,v2,o) OR frame(s,v1,null) and
+     * frame(s,v2,o)
+     *
+     * @param text
+     * @param sentence
+     * @throws IllegalArgumentException
+     */
+    private void processAndCase5(String text, WordDefinitionNode[] sentence) throws IllegalArgumentException {
+        try {
+            System.out.println("Attempting to apply processAndCase5.");
+
+            String[] parts = text.split(" and "); // split in 2
+            WordDefinitionNode[] part0, part1;
+
+            List<WordDefinitionNode> sentenceAsList = Arrays.asList(sentence);
+
+            // second part S V2 O
+            int verb1Index = 0;
+            for (int i = 0; i < sentenceAsList.size(); i++) {
+                if (sentenceAsList.get(i).isVerb()) {
+                    verb1Index = i;
+                    break;
+                }
+            }
+
+            String v1 = sentenceAsList.get(verb1Index).getTrigger();
+
+            List<WordDefinitionNode> part1List = new ArrayList<>();
+            List<WordDefinitionNode> s = sentenceAsList.subList(0, verb1Index);
+            List<WordDefinitionNode> v2o = sentenceAsList.subList(parts[0].split(" ").length + 1, sentenceAsList.size());
+            part1List.addAll(s);
+            part1List.addAll(v2o);
+            part1 = part1List.toArray(new WordDefinitionNode[part1List.size()]);
+
+            SVOFrame[] frames = new SVOFrame[2];
+            String textForFrame1 = parts[0].split(v1)[0] + parts[1];
+            frames[1] = (SVOFrame) processSimpleSentence(textForFrame1, part1, true);
+
+            // now check first part
+            frames[0] = frames[1].clone();
+            frames[0].setVerb(v1);
+
+            // check if we need to keep object or not.
+            boolean needToKeepObject = false;
+            List<WordDefinitionNode> part0List = new ArrayList<>();
+
+            // assign needToKeepObject a value based on valency
+            // need to check if verb1 and object have anything in common
+            String[] verb1Molecules = sentenceAsList.get(verb1Index).getMolecules();
+            String[] objectMolecules;
+            List<String> objectMoleculesAsList = new ArrayList<>();
+
+            for (int i = 0; i < v2o.size(); i++) {
+                if (i == 0) {
+                    continue;
+                }
+                objectMoleculesAsList.addAll(Arrays.asList(v2o.get(i).getMolecules()));
+            }
+
+            objectMolecules = objectMoleculesAsList.toArray(new String[objectMoleculesAsList.size()]);
+
+            // compare
+            for (String s1 : objectMolecules) {
+                for (String s2 : verb1Molecules) {
+                    if (s1.equals(s2)) {
+                        needToKeepObject = true;
+                    }
+                }
+            }
+
+            if (!needToKeepObject) {
+                System.out.println("no need to keep object");
+                frames[0].setObject("");
+                part0List.addAll(s);
+                part0List.add(sentenceAsList.get(verb1Index));
+            } else {
+                System.out.println("need to keep object");
+                part0List.addAll(s);
+                part0List.add(sentenceAsList.get(verb1Index));
+                // add object's def nodes
+                for (int i = 0; i < v2o.size(); i++) {
+                    if (i == 0) {
+                        continue;
+                    }
+                    part0List.add(v2o.get(i));
+                }
+            }
+
+            part0 = part0List.toArray(new WordDefinitionNode[part0List.size()]);
+
+            // populate
+            if (needToKeepObject) populateMemory(frames[0], part0);
+            populateMemory(frames[1], part1);
+
+            System.out.println("Applied processANDcase5 successfully.");
+        } catch (NullPointerException e) {
+            System.out.println("Failed to apply processANDcase5.");
+            throw new IllegalArgumentException("Failed to apply processANDcase5.");
+        }
     }
 
-    private void populateMemory(String text, SVOFrame frame, WordDefinitionNode[] nodes) {
+    /**
+     * Use frame and associated <code>WordDefinitionNode</code>s to populate
+     * memory
+     *
+     * @param frame
+     * @param nodes
+     */
+    private void populateMemory(SVOFrame frame, WordDefinitionNode[] nodes) {
         ArrayList<String> molecules = new ArrayList<>();
 
         List<WordDefinitionNode> subjectNodes = new ArrayList<>();

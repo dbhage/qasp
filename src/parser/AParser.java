@@ -46,7 +46,7 @@ public abstract class AParser {
 
     protected WordDefinitionNode[][] tokenizeSentence(String sentence) {
         String[] words = sentence.split(" ");
-         ArrayList<ArrayList<WordDefinitionNode>> masterList = new ArrayList<>();
+        ArrayList<ArrayList<WordDefinitionNode>> masterList = new ArrayList<>();
 
         // get definition nodes for each word
         int noOfCombos = 1;
@@ -80,7 +80,11 @@ public abstract class AParser {
             String s = text[i];
             if (s.equals("")) {
                 //continue;
-                System.err.println("Error: Found empty string when generating prime rep for text");
+                System.err.println("Error: Found empty string when generating prime rep for text: ");
+                for (String ts: text) {
+                    System.err.print(ts + " ");
+                }
+                System.err.println();
                 return "";
             }
             if (s.equals("the")) {

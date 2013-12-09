@@ -39,8 +39,9 @@ public class QueryResult {
         this.result = result;
     }
 
-    public QueryResult() {}
-    
+    public QueryResult() {
+    }
+
     @Override
     public String toString() {
         return result;

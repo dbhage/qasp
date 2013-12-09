@@ -429,7 +429,7 @@ public class Memory {
     public List<WordDefinitionNode> getWordNodes(String trigger) {
         return wordNodes.get(trigger);
     }
-    
+
     /**
      * @param wordNodes the wordNodes to set
      */
@@ -463,14 +463,16 @@ public class Memory {
         if (nodes == null || nodes.isEmpty()) {
             return false;
         }
-        
+
         for (DefinitionNode def : nodes) {
-            if (def.getPrimeRepresentation().equals(primeDef)) return true;
+            if (def.getPrimeRepresentation().equals(primeDef)) {
+                return true;
+            }
         }
-        
+
         return false;
     }
-    
+
     public DefinitionNode getDefinitionNode(String s) {
         return defNodes.get(s).get(0);
     }

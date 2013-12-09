@@ -33,14 +33,14 @@ import forms.StatisticsPanel;
  * StatisticsController class.
  *
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:53:27 PM,
- Nov 7, 2013 Description:
+ * Nov 7, 2013 Description:
  */
 public class StatisticsController implements Runnable {
 
     private final StatisticsPanel statsPanel;
     private final SessionManager model;
     private final QASPFrame view;
-    
+
     public StatisticsController(QASPFrame qaspFrame, SessionManager model) {
         this.statsPanel = qaspFrame.getStatisticsPanel();
         this.model = model;

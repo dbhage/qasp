@@ -50,8 +50,9 @@ public class QueryParser extends AParser implements IParser {
         text = cleanString(text);
         WordDefinitionNode[][] tokenizedSentences = tokenizeSentence(text);
         frames = new AFrame[tokenizedSentences.length];
-        for (int i=0; i<tokenizedSentences.length; i++)
+        for (int i = 0; i < tokenizedSentences.length; i++) {
             frames[i] = processSimpleQuery(text, tokenizedSentences[i]);
+        }
     }
 
     private AFrame processSimpleQuery(String text, WordDefinitionNode[] words) {

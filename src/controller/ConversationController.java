@@ -36,8 +36,8 @@ import javax.swing.WindowConstants;
 /**
  * ConversationController class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:52:27 PM, Nov 7, 2013 
- * Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:52:27 PM,
+ * Nov 7, 2013 Description:
  */
 public class ConversationController {
 
@@ -54,9 +54,9 @@ public class ConversationController {
     }
 
     private class InputTextFieldActionListener implements ActionListener {
-        
+
         private AskForWordDialog dialog;
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             String text = conversationPanel.getInputTextField().getText();
@@ -64,7 +64,7 @@ public class ConversationController {
             conversationPanel.getConversationTextArea().append("> " + text + "\n");
 
             checkForWordsExistence(text);
-            
+
             if (text.endsWith("?")) {
                 conversationPanel.getConversationTextArea().append("> " + model.handleQuery(text) + "\n");
             } else {
@@ -74,12 +74,12 @@ public class ConversationController {
 
         private void checkForWordsExistence(String text) {
             String[] words = text.split("[^a-zA-Z]+");
-            
+
             if (!(words.length > 2)) {
                 System.err.println("Sentence length is not greater than 2.");
                 System.exit(-1);
             }
-            
+
             for (String word : words) {
                 System.out.println(word);
                 if (!model.wordExists(word)) {
@@ -91,14 +91,14 @@ public class ConversationController {
                 }
             }
         }
-        
+
         private class SubmitButtonActionListener implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 String definition = dialog.getDefinitionTextField().getText();
                 String pos = (String) dialog.getPosComboBox().getSelectedItem();
-                model.saveNewWord(dialog.getWordLabel().getText(), definition, pos);       
+                model.saveNewWord(dialog.getWordLabel().getText(), definition, pos);
                 dialog.setVisible(false);
             }
         }

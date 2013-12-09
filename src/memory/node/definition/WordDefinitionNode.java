@@ -43,7 +43,7 @@ public class WordDefinitionNode extends DefinitionNode {
     public POS getPos() {
         return pos;
     }
-    
+
     public boolean isVerb() {
         return pos.equals(POS.V);
     }

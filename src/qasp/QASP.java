@@ -70,7 +70,7 @@ public class QASP {
         ConversationRepresentationController crController
                 = new ConversationRepresentationController(qaspFrame.
                         getConversationRepresentationPanel().getMetaDataTextArea());
-    
+
         System.setOut(new PrintStream(crController));
     }
 
@@ -129,9 +129,9 @@ public class QASP {
         //QASP.populateDatabase("populatePrimesTable.sql");
         QASP.startApp();
         /*
-        String[] currPrimes = "MARJAWAN".split("[^A-Z]");
-        for (String s : currPrimes) {
-            System.out.println(s);
-        }*/
+         String[] currPrimes = "MARJAWAN".split("[^A-Z]");
+         for (String s : currPrimes) {
+         System.out.println(s);
+         }*/
     }
 }

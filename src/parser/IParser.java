@@ -34,5 +34,6 @@ import frame.AFrame;
  * Nov 7, 2013 Description:
  */
 public interface IParser {
+
     public void parse(String text);
 }

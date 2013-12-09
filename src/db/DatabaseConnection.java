@@ -86,10 +86,10 @@ public class DatabaseConnection implements IDatabaseConnection {
 
     @Override
     public ResultSet executeQuery(String query) {
-        if (connection==null) {
+        if (connection == null) {
             throw new NullPointerException("Trying to execute query when Connection is null.");
         }
-        
+
         Statement statement;
         ResultSet resultSet = null;
         try {
@@ -100,16 +100,16 @@ public class DatabaseConnection implements IDatabaseConnection {
             System.err.println("Stack trace:\n" + ex.toString());
             System.exit(-1);
         }
-        
+
         return resultSet;
     }
 
     @Override
     public void executeInsert(String insert) {
-        if (connection==null) {
+        if (connection == null) {
             throw new NullPointerException("Trying to execute query when Connection is null.");
         }
-        
+
         Statement statement;
         try {
             statement = connection.createStatement();
@@ -121,4 +121,3 @@ public class DatabaseConnection implements IDatabaseConnection {
         }
     }
 }
-

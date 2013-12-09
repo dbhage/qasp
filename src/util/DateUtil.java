@@ -36,17 +36,17 @@ import java.util.Date;
 public class DateUtil {
 
     /**
-     * Takes a long and returns a date in format dd-mmm-yyyy hh:mm
-     * dd is 1 or 2 digits representing the day
-     * mmm is three letters representing the month
-     * yyyy is 4 digits representing the year
-     * hh:mm the time (hour and minute)
+     * Takes a long and returns a date in format dd-mmm-yyyy hh:mm dd is 1 or 2
+     * digits representing the day mmm is three letters representing the month
+     * yyyy is 4 digits representing the year hh:mm the time (hour and minute)
      * Example: 1385347724573 -> 24-Nov-2013 21:48
-     * @param date - <code>long</code> representing the time in ms from the epoch
+     *
+     * @param date - <code>long</code> representing the time in ms from the
+     * epoch
      * @return <code>String</code> representing date and time
      */
     public static String dateToString(long date) {
         String[] split = (new Date(date)).toString().split(" ");
-        return split[2] + "-" + split[1] + "-" + split[5] + " " + split[3].substring(0,5);
+        return split[2] + "-" + split[1] + "-" + split[5] + " " + split[3].substring(0, 5);
     }
 }

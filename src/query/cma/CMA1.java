@@ -95,10 +95,10 @@ public class CMA1 implements ICMA {
         // get molecules and elements
         String[] sMolecules = getMolecules(svoFrame.getSubject());
         printLn("Subject Molecules: " + stringArrayToString(sMolecules));
-        
+
         String[] vMolecules = memory.getDefinitionNode(svoFrame.getVerb()).getMolecules();
         printLn("Verb Molecules: " + stringArrayToString(vMolecules));
-        
+
         String[] oElements = svoFrame.getObject().split(" ");
         printLn("Object Elements: " + stringArrayToString(oElements));
 
@@ -273,7 +273,6 @@ public class CMA1 implements ICMA {
         // eg: try "joseph ate a burger", "what did joseph eat?"
         // no common molecules in subject but prime PEOPLE is 
         // common in the subjects.
-        
         return null;
     }
 
@@ -305,7 +304,9 @@ public class CMA1 implements ICMA {
         Set<String> objectPrimes = new TreeSet<>();
 
         for (String s : curOElements) {
-            if (s.isEmpty()) continue;
+            if (s.isEmpty()) {
+                continue;
+            }
             DefinitionNode defNode = memory.getDefinitionNode(s);
             String primeRepresentation = defNode.getPrimeRepresentation();
             String[] currPrimes = primeRepresentation.split("[^A-Z]");

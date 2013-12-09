@@ -39,11 +39,11 @@ public class DefinitionNode {
     private final String trigger;
     private final String primeRepresentation;
     private final String[] molecules;
-    
+
     public DefinitionNode(String trigger, String primeRep) {
         this.trigger = trigger;
         this.primeRepresentation = primeRep;
-        
+
         ArrayList<String> moleculeList = new ArrayList<>();
         Pattern pattern = Pattern.compile("#[a-z]+");
         Matcher matcher = pattern.matcher(primeRep);

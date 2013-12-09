@@ -33,8 +33,8 @@ import javax.swing.SwingUtilities;
 /**
  * ConversationRepresentationController class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:53:12 PM, Nov 7, 2013 
- * Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:53:12 PM,
+ * Nov 7, 2013 Description:
  */
 public class ConversationRepresentationController extends OutputStream {
 

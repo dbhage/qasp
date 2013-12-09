@@ -32,9 +32,10 @@ import query.QueryResult;
 /**
  * ICMA interface.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:11:30 PM, Nov 7, 2013 
- * Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:11:30 PM,
+ * Nov 7, 2013 Description:
  */
 public interface ICMA {
+
     public QueryResult search(AFrame frame, Memory memory);
 }

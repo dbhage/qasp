@@ -38,13 +38,13 @@ import forms.SaveErrorDialog;
  * FileMenuController class.
  *
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 3:06:50 PM,
- Nov 11, 2013 Description:
+ * Nov 11, 2013 Description:
  */
 public class MenuController {
 
     private final SessionManager model;
     private final QASPFrame view;
-    
+
     public MenuController(QASPFrame qaspFrame, SessionManager model) {
         this.model = model;
         this.view = qaspFrame;
@@ -147,12 +147,12 @@ public class MenuController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            final String [] availableSessions = model.getAvailableSessions();
+            final String[] availableSessions = model.getAvailableSessions();
             if (availableSessions == null) {
                 System.out.println("No sessions to be loaded.");
                 return;
             }
-            
+
             // launch load session dialog box
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override

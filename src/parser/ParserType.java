@@ -23,15 +23,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package parser;
 
 /**
  * ParserType Enum.
- * @author Dwijesh Bhageerutty, neerav789@gmail.com
- * Date created: 3:41:47 PM, Nov 24, 2013
- * Description: 
+ *
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 3:41:47 PM,
+ * Nov 24, 2013 Description:
  */
 public enum ParserType {
+
     QUERY, SENTENCE;
 }

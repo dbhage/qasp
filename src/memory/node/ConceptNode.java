@@ -31,8 +31,8 @@ import java.util.List;
 /**
  * ConceptNode class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:39:08 PM, Nov 7, 2013 
- * Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:39:08 PM,
+ * Nov 7, 2013 Description:
  */
 public class ConceptNode {
 
@@ -81,10 +81,12 @@ public class ConceptNode {
     public ConceptType getType() {
         return type;
     }
-    
+
     public boolean containsMolecule(String molecule) {
         for (String mol : molecules) {
-            if (mol.equals(molecule)) return true;
+            if (mol.equals(molecule)) {
+                return true;
+            }
         }
         return false;
     }

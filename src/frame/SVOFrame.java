@@ -46,6 +46,16 @@ public class SVOFrame extends AFrame {
      */
     private String object;
 
+    public SVOFrame() {
+        
+    }
+    
+    public SVOFrame(String s, String v, String o) {
+        this.subject = s;
+        this.verb = v;
+        this.object = o;
+    }
+    
     /**
      * @return the subject
      */
@@ -90,6 +100,12 @@ public class SVOFrame extends AFrame {
 
     @Override
     public String toString() {
-        return "Subject: " + subject +  " Verb: " + verb + " Object: " + object;
+        return "Subject: " + subject + " Verb: " + verb + " Object: " + object;
+    }
+    
+    @Override
+    public SVOFrame clone() {
+        return new SVOFrame(this.subject, this.verb, this.object);
     }
 }
+

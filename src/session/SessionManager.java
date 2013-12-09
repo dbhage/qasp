@@ -60,7 +60,7 @@ public class SessionManager {
         dbConn.establishConnection();
         inputHandler = new InputHandler();
         queryHandler = new QueryHandler();
-        
+
         try {
             loadPrimes();
         } catch (SQLException ex) {

@@ -23,25 +23,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 package util;
 
 /**
  * MathUtil class.
- * @author Dwijesh Bhageerutty, neerav789@gmail.com
- Date created: 7:01:04 PM, Nov 22, 2013
- Description: 
+ *
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 7:01:04 PM,
+ * Nov 22, 2013 Description:
  */
 public class MathUtil {
 
     /**
      * Get a random <code>long</code> between 2 numbers
+     *
      * @param min - minimum number
      * @param max - maximum number in range
-     * @return random <code>long</code> between <code>min</code> and <code>max</code>
+     * @return random <code>long</code> between <code>min</code> and
+     * <code>max</code>
      */
     public static long getRandomNumber(long min, long max) {
-        return min + (long)(Math.random() * ((max - min) + 1));
+        return min + (long) (Math.random() * ((max - min) + 1));
     }
-    
+
 }
