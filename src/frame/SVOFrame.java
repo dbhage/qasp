@@ -100,7 +100,7 @@ public class SVOFrame extends AFrame {
 
     @Override
     public String toString() {
-        return "Subject: " + subject + " Verb: " + verb + " Object: " + object;
+        return "S: " + subject + " V: " + verb + " O: " + object;
     }
     
     @Override

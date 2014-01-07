@@ -60,6 +60,7 @@ public class SessionSaver {
         try {
             saveSessionData();
             if (memory.isEmpty()) {
+                System.out.println("Memory empty.");
                 return;
             }
             saveEvents();
@@ -72,6 +73,7 @@ public class SessionSaver {
             saveSessionMoleculesConcept();
         } catch (SQLException ex) {
             System.err.println("Exception while saving memory.");
+            System.err.println(ex.toString());
             System.exit(-1);
         }
     }
@@ -112,18 +114,21 @@ public class SessionSaver {
         for (WordDefinitionNode word : memory.getWordNodes()) {
             trigger = word.getTrigger();
 
-            query = "SELECT defid FROM definition WHERE trig=" + trigger + ";";
+            query = "SELECT defid FROM definition WHERE trig=\'" + trigger + "\';";
+            System.err.println(query);
             ResultSet rs = dbConn.executeQuery(query);
 
             if (rs == null) {
                 System.err.println("defid for word " + trigger + "not found in definition table.");
                 System.exit(-1);
             } else {
-                int defid = rs.getInt("defid");
-                insert = "INSERT INTO words VALUES("
-                        + defid + ","
-                        + "\'" + sessionId + "\');";
-                dbConn.executeInsert(insert);
+                if (rs.next()) {
+                    int defid = rs.getInt("defid");
+                    insert = "INSERT INTO words VALUES("
+                            + defid + ","
+                            + "\'" + sessionId + "\');";
+                    dbConn.executeInsert(insert);
+                }
             }
         }
     }
@@ -133,18 +138,20 @@ public class SessionSaver {
         for (DefinitionNode text : memory.getTextNodes()) {
             trigger = text.getTrigger();
 
-            query = "SELECT defid FROM definition WHERE trig=" + trigger + ";";
+            query = "SELECT defid FROM definition WHERE trig=\'" + trigger + "\';";
             ResultSet rs = dbConn.executeQuery(query);
 
             if (rs == null) {
                 System.err.println("defid for text " + trigger + "not found in definition table.");
                 System.exit(-1);
             } else {
-                int defid = rs.getInt("defid");
-                insert = "INSERT INTO text VALUES("
-                        + defid + ","
-                        + "\'" + sessionId + "\');";
-                dbConn.executeInsert(insert);
+                if (rs.next()) {
+                    int defid = rs.getInt("defid");
+                    insert = "INSERT INTO text VALUES("
+                            + defid + ","
+                            + "\'" + sessionId + "\');";
+                    dbConn.executeInsert(insert);
+                }
             }
         }
     }
@@ -196,19 +203,21 @@ public class SessionSaver {
         String insert, query;
         for (ConceptNode conceptNode : memory.getAllConcepts()) {
             for (String molecule : conceptNode.getMolecules()) {
-                query = "SELECT defid FROM definition WHERE trig=" + molecule + ";";
+                query = "SELECT defid FROM definition WHERE trig=\'" + molecule + "\';";
                 ResultSet rs = dbConn.executeQuery(query);
 
                 if (rs == null) {
                     System.err.println("Could not find molecule " + molecule + "'s defid in definition table.");
                     System.exit(-1);
                 } else {
-                    int defid = rs.getInt("defid");
-                    insert = "INSERT INTO sessionmoleculesconcept VALUES("
-                            + defid + ","
-                            + "\'" + sessionId + "\',"
-                            + conceptNode.getTypeId() + ");";
-                    dbConn.executeInsert(insert);
+                    if (rs.next()) {
+                        int defid = rs.getInt("defid");
+                        insert = "INSERT INTO sessionmoleculesconcept VALUES("
+                                + defid + ","
+                                + "\'" + sessionId + "\',"
+                                + conceptNode.getTypeId() + ");";
+                        dbConn.executeInsert(insert);
+                    }
                 }
             }
         }

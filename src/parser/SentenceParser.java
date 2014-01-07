@@ -54,28 +54,46 @@ public class SentenceParser extends AParser implements IParser {
         for (WordDefinitionNode[] tokenizedSentence : tokenizedSentences) {
             if (!(text.contains(" and ") || text.contains(" or "))) {
                 // simple sentence
-                AFrame frame = processSimpleSentence(text, tokenizedSentence, false);
-                populateMemory((SVOFrame) frame, tokenizedSentence);
+                try {
+                    AFrame frame = processSimpleSentence(text, tokenizedSentence, false);
+                    populateMemory((SVOFrame) frame, tokenizedSentence);
+                    System.out.println("Applied processSimpleSentence.");
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Sentence cannot be parsed.");
+                }
             } else if (text.contains(" and ") && !text.contains(" or ")) {
                 try {
                     processAndCase1(text, tokenizedSentence);
+                    System.out.println("Applied processAndCase1.");
                 } catch (IllegalArgumentException e) {
                     try {
                         processAndCase2(text, tokenizedSentence);
+                        System.out.println("Applied processAndCase2.");
+
                     } catch (IllegalArgumentException e1) {
                         try {
                             processAndCase3(text, tokenizedSentence);
+                            System.out.println("Applied processAndCase3.");
+
                         } catch (IllegalArgumentException e2) {
                             try {
                                 processAndCase4(text, tokenizedSentence);
+                                System.out.println("Applied processAndCase4.");
+
                             } catch (IllegalArgumentException e3) {
-                                processAndCase5(text, tokenizedSentence);
+                                try {
+                                    processAndCase5(text, tokenizedSentence);
+                                    System.out.println("Applied processAndCase5.");
+
+                                } catch (IllegalArgumentException e4) {
+                                    System.out.println("Sentence cannot be parsed.");
+                                }
                             }
                         }
                     }
                 }
             } else {
-                throw new UnsupportedOperationException("not supported yet");
+                System.out.println("Sentence cannot be parsed.");
             }
         }
     }
@@ -97,16 +115,16 @@ public class SentenceParser extends AParser implements IParser {
                 tab = "";
             }
 
-            System.out.println(tab + "Attempting to apply processSimpleSentence.");
-
             SVOFrame svoFrame = new SVOFrame();
             for (WordDefinitionNode word : sentence) {
                 if (word.getPos().equals(POS.V)) {
                     svoFrame.setVerb(word.getTrigger());
                 }
             }
+
             svoFrame.setSubject(text.split(svoFrame.getVerb())[0]);
             String o = text.split(svoFrame.getVerb())[1];
+
             if (o.startsWith(" ")) {
                 svoFrame.setObject(o.substring(1, o.length()));
             } else {
@@ -117,8 +135,6 @@ public class SentenceParser extends AParser implements IParser {
                 throw new IllegalArgumentException("Subject is empty");
             }
 
-            System.out.println(tab + "Generated: " + svoFrame.toString());
-            System.out.println(tab + "Applied processSimpleSentence Successfully.");
             return svoFrame;
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new IllegalArgumentException("ProcessSimpleSentence failed.");
@@ -134,8 +150,6 @@ public class SentenceParser extends AParser implements IParser {
      */
     private void processAndCase1(String text, WordDefinitionNode[] sentence) throws IllegalArgumentException {
         try {
-            System.out.println("Attempting to apply processAndCase1.");
-
             String[] parts = text.split(" and "); // split in 2
 
             WordDefinitionNode[] part0, part1;
@@ -156,9 +170,7 @@ public class SentenceParser extends AParser implements IParser {
             populateMemory((SVOFrame) frames[0], part0);
             populateMemory((SVOFrame) frames[1], part1);
 
-            System.out.println("Applied processANDcase1 successfully.");
         } catch (NullPointerException e) {
-            System.out.println("Failed processANDcase1");
             throw new IllegalArgumentException("Failed processANDcase1");
         }
     }
@@ -172,8 +184,6 @@ public class SentenceParser extends AParser implements IParser {
      */
     private void processAndCase2(String text, WordDefinitionNode[] sentence) throws IllegalArgumentException {
         try {
-            System.out.println("Attempting to apply processAndCase2.");
-
             String[] parts = text.split(" and "); // split in 2
             WordDefinitionNode[] part0, part1;
 
@@ -200,9 +210,7 @@ public class SentenceParser extends AParser implements IParser {
             populateMemory((SVOFrame) frames[0], part0);
             populateMemory((SVOFrame) frames[1], part1);
 
-            System.out.println("Applied processANDcase2 successfully.");
         } catch (NullPointerException e) {
-            System.out.println("Failed to apply processANDcase2.");
             throw new IllegalArgumentException("Failed to apply processANDcase2.");
         }
     }
@@ -216,8 +224,6 @@ public class SentenceParser extends AParser implements IParser {
      */
     private void processAndCase3(String text, WordDefinitionNode[] sentence) {
         try {
-            System.out.println("Attempting to apply processAndCase3.");
-
             String[] parts = text.split(" and "); // split in 2
             WordDefinitionNode[] part0, part1;
 
@@ -255,9 +261,7 @@ public class SentenceParser extends AParser implements IParser {
             populateMemory(frames[0], part0);
             populateMemory(frames[1], part1);
 
-            System.out.println("Applied processANDcase3 successfully.");
         } catch (NullPointerException e) {
-            System.out.println("Failed to apply processANDcase3.");
             throw new IllegalArgumentException("Failed to apply processANDcase2.");
         }
     }
@@ -272,8 +276,6 @@ public class SentenceParser extends AParser implements IParser {
      */
     private void processAndCase4(String text, WordDefinitionNode[] sentence) throws IllegalArgumentException {
         try {
-            System.out.println("Attempting to apply processAndCase4.");
-
             String[] parts = text.split(" and "); // split in 2
             WordDefinitionNode[] part0, part1;
 
@@ -310,9 +312,7 @@ public class SentenceParser extends AParser implements IParser {
             populateMemory(frames[0], part0);
             populateMemory(frames[1], part1);
 
-            System.out.println("Applied processANDcase4 successfully.");
         } catch (NullPointerException e) {
-            System.out.println("Failed to apply processANDcase4.");
             throw new IllegalArgumentException("Failed to apply processANDcase2.");
         }
     }
@@ -328,8 +328,6 @@ public class SentenceParser extends AParser implements IParser {
      */
     private void processAndCase5(String text, WordDefinitionNode[] sentence) throws IllegalArgumentException {
         try {
-            System.out.println("Attempting to apply processAndCase5.");
-
             String[] parts = text.split(" and "); // split in 2
             WordDefinitionNode[] part0, part1;
 
@@ -410,12 +408,10 @@ public class SentenceParser extends AParser implements IParser {
             part0 = part0List.toArray(new WordDefinitionNode[part0List.size()]);
 
             // populate
-            if (needToKeepObject) populateMemory(frames[0], part0);
+            populateMemory(frames[0], part0);
             populateMemory(frames[1], part1);
 
-            System.out.println("Applied processANDcase5 successfully.");
         } catch (NullPointerException e) {
-            System.out.println("Failed to apply processANDcase5.");
             throw new IllegalArgumentException("Failed to apply processANDcase5.");
         }
     }
@@ -429,17 +425,23 @@ public class SentenceParser extends AParser implements IParser {
      */
     private void populateMemory(SVOFrame frame, WordDefinitionNode[] nodes) {
         ArrayList<String> molecules = new ArrayList<>();
-
         List<WordDefinitionNode> subjectNodes = new ArrayList<>();
         List<WordDefinitionNode> objectNodes = new ArrayList<>();
 
         int subIndex = frame.getSubject().split(" ").length;
+        boolean addMolecule = true;
 
         for (int i = 0; i < nodes.length; i++) {
-            String[] wordMolecules = nodes[i].getMolecules();
+            if (nodes[i].getTrigger().equals(frame.getVerb())) {
+                addMolecule = false;
+            }
 
-            if (wordMolecules.length != 0) {
-                molecules.addAll(Arrays.asList(wordMolecules));
+            if (addMolecule) {
+                String[] wordMolecules = nodes[i].getMolecules();
+
+                if (wordMolecules.length != 0) {
+                    molecules.addAll(Arrays.asList(wordMolecules));
+                }
             }
 
             if (i < subIndex) {
@@ -453,24 +455,29 @@ public class SentenceParser extends AParser implements IParser {
 
         if (isState(frame.getVerb())) {
             memory.addConceptNode(frame.getSubject(), ConceptType.STATE, molecules);
-            memory.addStateNode(frame.getObject());
+            if (!frame.getObject().isEmpty()) {
+                memory.addStateNode(frame.getObject());
+            }
         } else {
             memory.addConceptNode(frame.getSubject(), ConceptType.EVENT, molecules);
             memory.addEventNode(frame.getVerb(), frame.getObject());
         }
 
         // definition nodes for subject
-        String primeDefSubject = generatePrimeRepForText(frame.getSubject().split(" "), subjectNodes.toArray(new WordDefinitionNode[subjectNodes.size()]));
+        String primeDefSubject = generatePrimeRepForText(subjectNodes.toArray(new WordDefinitionNode[subjectNodes.size()]));
 
         if (memory.hasDefinitionNode(frame.getSubject(), primeDefSubject)) {
             memory.addDefinitionNode(frame.getSubject(), primeDefSubject, POS.S);
         }
 
         // definition nodes for object
-        String primeDefObject = generatePrimeRepForText(frame.getObject().split(" "), objectNodes.toArray(new WordDefinitionNode[objectNodes.size()]));
+        if (!frame.getObject().isEmpty()) {
+            String primeDefObject = generatePrimeRepForText(objectNodes.toArray(new WordDefinitionNode[objectNodes.size()]));
 
-        if (memory.hasDefinitionNode(frame.getObject(), primeDefObject)) {
-            memory.addDefinitionNode(frame.getObject(), primeDefObject, POS.O);
+            if (memory.hasDefinitionNode(frame.getObject(), primeDefObject)) {
+                memory.addDefinitionNode(frame.getObject(), primeDefObject, POS.O);
+            }
         }
+        System.out.println("Populated memory with " + frame.toString());
     }
 }

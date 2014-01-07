@@ -26,22 +26,28 @@
 package controller;
 
 import forms.QASPFrame;
-import session.SessionManager;
 import forms.StatisticsPanel;
+import session.ISessionManager;
 
 /**
  * StatisticsController class.
- *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:53:27 PM,
- * Nov 7, 2013 Description:
+ * Implements <code>Runnable</code>
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 12:53:27 PM, Nov 7, 2013 
+ * Description: Controller for <code>StatisticsPanel</code>
  */
 public class StatisticsController implements Runnable {
 
     private final StatisticsPanel statsPanel;
-    private final SessionManager model;
+    private final ISessionManager model;
     private final QASPFrame view;
 
-    public StatisticsController(QASPFrame qaspFrame, SessionManager model) {
+    /**
+     * Constructor
+     * @param qaspFrame - the view
+     * @param model - the model
+     */
+    public StatisticsController(QASPFrame qaspFrame, ISessionManager model) {
         this.statsPanel = qaspFrame.getStatisticsPanel();
         this.model = model;
         this.view = qaspFrame;

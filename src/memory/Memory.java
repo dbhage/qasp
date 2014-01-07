@@ -263,8 +263,8 @@ public class Memory {
                 && defNodes.isEmpty() && textNodes.isEmpty() && wordNodes.isEmpty()
                 && verbNodes.isEmpty() && allConcepts.isEmpty() && conversations.isEmpty()
                 && moleculesToConceptMap.isEmpty()) {
-            if (conceptNo != 1) {
-                System.err.println("Memory empty but conceptNo is not equal to 1.");
+            if (conceptNo != 0) {
+                System.err.println("Memory empty but conceptNo is not equal to 0.");
                 System.exit(-1);
             }
             return true;

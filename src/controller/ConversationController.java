@@ -28,24 +28,30 @@ package controller;
 import forms.AskForWordDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import session.SessionManager;
 import forms.ConversationPanel;
 import forms.QASPFrame;
 import javax.swing.WindowConstants;
+import session.ISessionManager;
 
 /**
  * ConversationController class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:52:27 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 12:52:27 PM, Nov 7, 2013 
+ * Description: Controller for <code>ConversationPanel</code>
  */
 public class ConversationController {
 
     private final ConversationPanel conversationPanel;
     private final QASPFrame view;
-    private final SessionManager model;
+    private final ISessionManager model;
 
-    public ConversationController(QASPFrame qaspFrame, SessionManager model) {
+    /**
+     * Constructor
+     * @param qaspFrame - the view
+     * @param model - the model
+     */
+    public ConversationController(QASPFrame qaspFrame, ISessionManager model) {
         this.view = qaspFrame;
         this.conversationPanel = qaspFrame.getConversationPanel();
         this.model = model;
@@ -81,7 +87,6 @@ public class ConversationController {
             }
 
             for (String word : words) {
-                System.out.println(word);
                 if (!model.wordExists(word)) {
                     // show get word dialog box
                     dialog = new AskForWordDialog(view, true, word);

@@ -34,6 +34,7 @@ import controller.StatisticsController;
 import db.DatabaseConnection;
 import db.IDatabaseConnection;
 import java.io.PrintStream;
+import session.ISessionManager;
 
 /**
  * QASP class.
@@ -46,7 +47,7 @@ public class QASP {
     public QASP(QASPFrame qaspFrame) {
 
         // create model
-        final SessionManager model = new SessionManager();
+        final ISessionManager model = new SessionManager();
 
         qaspFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -126,7 +127,7 @@ public class QASP {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        //QASP.populateDatabase("populatePrimesTable.sql");
+        //QASP.populateDatabase("populateDefinition.sql");
         QASP.startApp();
         /*
          String[] currPrimes = "MARJAWAN".split("[^A-Z]");

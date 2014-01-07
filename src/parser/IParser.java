@@ -25,8 +25,6 @@
  */
 package parser;
 
-import frame.AFrame;
-
 /**
  * IParser interface.
  *

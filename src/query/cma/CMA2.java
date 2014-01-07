@@ -26,6 +26,7 @@
 package query.cma;
 
 import frame.AFrame;
+import java.util.List;
 import memory.Memory;
 import query.QueryResult;
 
@@ -38,8 +39,7 @@ import query.QueryResult;
 public class CMA2 implements ICMA {
 
     @Override
-    public QueryResult search(AFrame frame, Memory memory) {
+    public List<QueryResult> search(AFrame frame, Memory memory) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

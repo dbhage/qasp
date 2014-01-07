@@ -33,13 +33,19 @@ import javax.swing.SwingUtilities;
 /**
  * ConversationRepresentationController class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:53:12 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 12:53:12 PM, Nov 7, 2013 
+ * Description: Controller for <code>ConversationRepresentationPanel</code> 
  */
 public class ConversationRepresentationController extends OutputStream {
 
     private final JTextArea metaDataTextArea;
 
+    /**
+     * Constructor
+     * @param destination - the <code>JTextArea</code> where meta-data about the processes inside the 
+     * system will printed.
+     */
     public ConversationRepresentationController(JTextArea destination) {
         if (destination == null) {
             throw new IllegalArgumentException("Destination is null");

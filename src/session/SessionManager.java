@@ -27,13 +27,10 @@ package session;
 
 import db.DatabaseConnection;
 import db.IDatabaseConnection;
-import frame.AFrame;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import memory.Memory;
 import memory.Prime;
 import parser.InputHandler;
@@ -48,10 +45,10 @@ import util.DateUtil;
  * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:28 PM,
  * Nov 7, 2013 Description:
  */
-public class SessionManager {
+public class SessionManager implements ISessionManager {
 
-    private InputHandler inputHandler;
-    private QueryHandler queryHandler;
+    private final InputHandler inputHandler;
+    private final QueryHandler queryHandler;
     private Session currentSession;
     private final IDatabaseConnection dbConn;
 
@@ -69,55 +66,69 @@ public class SessionManager {
         }
     }
 
+    @Override
     public void createSession() {
         currentSession = new Session("S" + util.MathUtil.getRandomNumber(100000000, 999999999), dbConn);
     }
 
+    @Override
     public void switchToSession(String sessionId) {
         currentSession = new Session(sessionId, dbConn);
         SessionLoader sessionLoader = new SessionLoader(dbConn, currentSession);
         sessionLoader.load();
     }
 
+    @Override
     public void handleText(String text) {
 
         if (!currentSession.isLive()) {
             currentSession.startConversation();
         }
-
-        inputHandler.handleText(text, ParserType.SENTENCE, currentSession.getMemory());
+        currentSession.getMemory().getCurrentConversation().addSentence(text);
+        inputHandler.handleText(text.toLowerCase(), ParserType.SENTENCE, currentSession.getMemory());
     }
 
+    @Override
     public String handleQuery(String text) {
         if (!currentSession.isLive()) {
             currentSession.startConversation();
         }
 
-        inputHandler.handleText(text, ParserType.QUERY, currentSession.getMemory());
+        currentSession.getMemory().getCurrentConversation().addSentence(text);
+        inputHandler.handleText(text.toLowerCase(), ParserType.QUERY, currentSession.getMemory());
         queryHandler.handleQuery(inputHandler.getFrames(), CMAType.ONE, currentSession.getMemory());
-        return queryHandler.getResult().toString();
+        return queryHandler.getAnswer();
     }
 
+    @Override
     public void saveCurrentSession() {
+        System.out.println("Saving session.");
         SessionSaver sessionSaver = new SessionSaver(dbConn, currentSession);
         sessionSaver.save();
+        System.out.println("Session Saved.");
     }
 
+    @Override
     public boolean saveSessionAs(String sid) {
+        currentSession.setSessionID(sid);
+        saveCurrentSession();
         return true;
     }
 
+    @Override
     public boolean currentSessionSaved() {
         return false;
     }
 
+    @Override
     public String getCurrentConversationDuration() {
         if (currentSession == null) {
             return "";
         }
-        return "na";
+        return "1 minute.";
     }
 
+    @Override
     public String getCurrentConversationStartTime() {
         if (currentSession == null) {
             return "";
@@ -125,6 +136,7 @@ public class SessionManager {
         return DateUtil.dateToString(currentSession.getCurrentConversationStartTime());
     }
 
+    @Override
     public String getNoOfConversations() {
         if (currentSession == null) {
             return "";
@@ -132,6 +144,7 @@ public class SessionManager {
         return currentSession.getNoOfConversations() + "";
     }
 
+    @Override
     public String getNoOfNodesInCurrentSession() {
         if (currentSession == null) {
             return "";
@@ -139,6 +152,7 @@ public class SessionManager {
         return currentSession.getNoOfNodes() + "";
     }
 
+    @Override
     public String getSessionId() {
         if (currentSession == null) {
             return "";
@@ -146,6 +160,11 @@ public class SessionManager {
         return currentSession.getSessionID();
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public String getSessionStartTime() {
         if (currentSession == null) {
             return "";
@@ -153,6 +172,7 @@ public class SessionManager {
         return DateUtil.dateToString(currentSession.getStartDate());
     }
 
+    @Override
     public String getNoOfNodesInCurrentConversation() {
         if (currentSession == null) {
             return "";
@@ -160,6 +180,7 @@ public class SessionManager {
         return currentSession.getNoOfNodesInCurrentConversation() + "";
     }
 
+    @Override
     public String[] getAvailableSessions() {
         String query = "SELECT sessionid FROM session;";
         ResultSet rs = dbConn.executeQuery(query);
@@ -187,12 +208,14 @@ public class SessionManager {
         }
     }
 
+    @Override
     public void endCurrentConversation() {
         if (currentSession != null) {
             currentSession.endCurrentConversation();
         }
     }
 
+    @Override
     public boolean wordExists(String word) {
         if (currentSession == null) {
             System.err.println("wordExists being called when no session is active.");
@@ -201,6 +224,7 @@ public class SessionManager {
         return currentSession.wordExists(word);
     }
 
+    @Override
     public void saveNewWord(String word, String definition, String pos) {
         if (currentSession == null) {
             System.err.println("saveNewWord being called when no session is active.");
@@ -209,6 +233,7 @@ public class SessionManager {
         currentSession.saveNewWord(word, definition, pos);
     }
 
+    @Override
     public void disconnectFromDatabase() {
         dbConn.closeConnection();
     }

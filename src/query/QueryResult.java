@@ -28,23 +28,33 @@ package query;
 /**
  * QueryResult class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:10:24 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:10:24 PM, Nov 7, 2013 
+ * Description:
  */
-public class QueryResult {
+public class QueryResult implements Comparable<QueryResult> {
 
     private String result;
+    private final int queryScore;
 
     public QueryResult(String result) {
         this.result = result;
+        this.queryScore = -1;
+    }
+
+    public QueryResult(String result, int qS) {
+        this.result = result;
+        this.queryScore = qS;
     }
 
     public QueryResult() {
+        this.result = "";
+        this.queryScore = -1;
     }
 
     @Override
     public String toString() {
-        return result;
+        return "Answer: " + result + " Score: " + queryScore;
     }
 
     /**
@@ -59,5 +69,39 @@ public class QueryResult {
      */
     public void setResult(String result) {
         this.result = result;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            throw new NullPointerException("Comparing QueryResult object with null. (in .equals method)");
+        }
+        if (!(other instanceof QueryResult)) {
+            throw new ClassCastException("Passing .equals non QueryResult object");
+        }
+        QueryResult that = (QueryResult) other;
+        return this.queryScore == that.queryScore && this.result.equals(that.result);
+    }
+
+    @Override
+    public int compareTo(QueryResult o) {
+        if (o == null) {
+            throw new NullPointerException("Comparing QueryResult object with null.");
+        }
+
+        if (this.queryScore < o.queryScore) {
+            return -1;
+        } else if (this.queryScore > o.queryScore) {
+            return 1;
+        } else {
+            return 0; // because we'll sort on score only, don't care about string
+        }
+    }
+
+    /**
+     * @return the queryScore
+     */
+    public int getQueryScore() {
+        return queryScore;
     }
 }

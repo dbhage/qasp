@@ -39,7 +39,7 @@ import memory.node.definition.POS;
  */
 public class Session {
 
-    private final String sessionID;
+    private String sessionID;
     private final Memory memory;
     private boolean memoryInitialized;
     private long startTime;
@@ -167,6 +167,12 @@ public class Session {
                 System.exit(-1);
             }
         }
+        
+        if (exists) {
+            // just learned a new word
+            System.out.println("Learned new word: " + word);
+        }
+        
         return exists;
     }
 
@@ -181,10 +187,18 @@ public class Session {
                 + "\'" + "word" + "\');";
 
         dbConn.executeInsert(insert);
+        System.out.println("Learned new word: " + word);
     }
 
     public void startConversation() {
         memory.startConversation();
         live = true;
+    }
+
+    /**
+     * @param sessionID the sessionID to set
+     */
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
     }
 }

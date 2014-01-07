@@ -26,6 +26,7 @@
 package query.cma;
 
 import frame.AFrame;
+import java.util.List;
 import memory.Memory;
 import query.QueryResult;
 
@@ -36,6 +37,5 @@ import query.QueryResult;
  * Nov 7, 2013 Description:
  */
 public interface ICMA {
-
-    public QueryResult search(AFrame frame, Memory memory);
+    public List<QueryResult> search(AFrame frame, Memory memory);
 }

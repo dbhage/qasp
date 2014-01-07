@@ -1,3 +1,4 @@
+-- Semantic Primes Data
 INSERT INTO primes VALUES ('I', '&Substantives', '1');
 INSERT INTO primes VALUES ('YOU', '&Substantives', '1');
 INSERT INTO primes VALUES ('SOMETHING', '&Substantives', '1');

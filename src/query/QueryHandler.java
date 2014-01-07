@@ -27,6 +27,8 @@ package query;
 
 import query.cma.ICMA;
 import frame.AFrame;
+import java.util.ArrayList;
+import java.util.List;
 import memory.Memory;
 import query.cma.CMA1;
 import query.cma.CMA2;
@@ -35,13 +37,13 @@ import query.cma.CMAType;
 /**
  * QueryHandler class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:08:29 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:08:29 PM Nov
+ * 7, 2013 Description:
  */
 public class QueryHandler {
 
     private ICMA icma;
-    private QueryResult queryResult;
+    private List<QueryResult> queryResults;
 
     public void handleQuery(AFrame[] frames, CMAType cType, Memory memory) {
         if (frames == null || cType == null || memory == null) {
@@ -53,12 +55,34 @@ public class QueryHandler {
         } else if (cType.equals(CMAType.TWO)) {
             icma = new CMA2();
         }
+
+        queryResults = new ArrayList<>();
+
         for (AFrame frame : frames) {
-            queryResult = icma.search(frame, memory);
+            List<QueryResult> latestList = icma.search(frame, memory);
+            if (latestList == null) {
+                continue;
+            }
+            for (QueryResult qR : latestList) {
+                queryResults.add(qR);
+            }
         }
     }
 
-    public QueryResult getResult() {
-        return queryResult;
+    public String getAnswer() {
+        if (queryResults == null || queryResults.isEmpty()) {
+            return "no answer was found";
+        }
+
+        if (queryResults.size() == 1) {
+            return queryResults.get(0).getResult();
+        }
+
+        StringBuilder answer = new StringBuilder();
+        for (int i = 0; i < queryResults.size(); i++) {
+            answer.append("A").append(i).append(":")
+                    .append(queryResults.get(i).getResult().replace(',', ' ')).append(", ");
+        }
+        return answer.substring(0, answer.length()-1);
     }
 }

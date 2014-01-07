@@ -43,11 +43,21 @@ public class InputHandler {
             System.err.println("Parser type is null.");
             System.exit(-1);
         } else if (pType.equals(ParserType.QUERY)) {
+            System.out.println("-----------------------------");
+            System.out.println("Parsing query.");
             parser = new QueryParser(memory);
             parser.parse(text);
+            System.out.println("Generated Frames:");
+            for (AFrame frame : getFrames()) {
+                System.out.println(frame.toString());
+            }
+            System.out.println("-----------------------------");
         } else if (pType.equals(ParserType.SENTENCE)) {
+            System.out.println("-----------------------------");
+            System.out.println("Parsing sentence.");
             parser = new SentenceParser(memory);
             parser.parse(text);
+            System.out.println("-----------------------------");
         }
     }
 

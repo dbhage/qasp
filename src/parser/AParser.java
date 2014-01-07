@@ -72,50 +72,13 @@ public abstract class AParser {
         return combinations;
     }
 
-    protected String generatePrimeRepForText(String[] text, WordDefinitionNode[] nodes) {
+    protected String generatePrimeRepForText(WordDefinitionNode[] nodes) {
         String primeRep = "";
-
-        boolean the = false, in = false;
-        for (int i = 0; i < text.length; i++) {
-            String s = text[i];
-            if (s.equals("")) {
-                //continue;
-                System.err.println("Error: Found empty string when generating prime rep for text: ");
-                for (String ts: text) {
-                    System.err.print(ts + " ");
-                }
-                System.err.println();
-                return "";
-            }
-            if (s.equals("the")) {
-                the = true;
-                primeRep += "the(";
-                continue;
-            } else if (s.equals("in")) {
-                in = true;
-                primeRep += "inside(";
-                continue;
-            }
-            if (the) {
-                if (((WordDefinitionNode) (nodes[i])).getPos().equals(POS.N)
-                        || (text[text.length - 1] == s)) {
-                    primeRep += nodes[i].getPrimeRepresentation() + ")$$";
-                    the = false;
-                } else {
-                    primeRep += nodes[i].getPrimeRepresentation() + ",";
-                }
-            } else if (in) {
-                if (((WordDefinitionNode) (nodes[i])).getPos().equals(POS.N)
-                        || (text[text.length - 1] == s)) {
-                    primeRep += nodes[i].getPrimeRepresentation() + ")$$";
-                    in = false;
-                } else {
-                    primeRep += nodes[i].getPrimeRepresentation() + ",";
-                }
-            } else {
-                primeRep += nodes[i].getPrimeRepresentation() + "$$";
-            }
+        
+        for (WordDefinitionNode node : nodes) {
+            primeRep += node.getPrimeRepresentation() + ",";
         }
+ 
         return primeRep;
     }
 

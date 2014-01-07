@@ -27,15 +27,15 @@ package memory.node;
 
 /**
  * EventNode class.
- *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:24:30 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:24:30 PM, Nov 7, 2013 
+ * Description:
  */
 public class EventNode {
 
-    private int id;
-    private String verb;
-    private String object;
+    private final int id;
+    private final String verb;
+    private final String object;
 
     public EventNode(int n, String v, String o) {
         this.id = n;

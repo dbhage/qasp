@@ -28,24 +28,30 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
-import session.SessionManager;
 import forms.LoadSessionDialog;
 import forms.QASPFrame;
 import forms.SaveAsDialog;
 import forms.SaveErrorDialog;
+import session.ISessionManager;
 
 /**
  * FileMenuController class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 3:06:50 PM,
- * Nov 11, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 3:06:50 PM, Nov 11, 2013 
+ * Description: Controller for Session and Conversation menus
  */
 public class MenuController {
 
-    private final SessionManager model;
+    private final ISessionManager model;
     private final QASPFrame view;
 
-    public MenuController(QASPFrame qaspFrame, SessionManager model) {
+    /**
+     * Constructor
+     * @param qaspFrame - the view
+     * @param model - the model
+     */
+    public MenuController(QASPFrame qaspFrame, ISessionManager model) {
         this.model = model;
         this.view = qaspFrame;
         JMenuItem saveSessionMenuItem = qaspFrame.getSaveSessionMenuItem();
@@ -61,6 +67,8 @@ public class MenuController {
         endConvoMenuItem.addActionListener(new EndConversationActionListener());
     }
 
+    // inner classes: ActionListeners for Menus.
+    
     private class SaveMenuActionListener implements ActionListener {
 
         @Override

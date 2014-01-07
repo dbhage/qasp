@@ -82,7 +82,7 @@ public class SessionLoader {
      * Load data into <code>Session</code>
      */
     public void load() {
-        try {
+        /*try {
             loadSessionData();
             loadEvents();
             loadStates();
@@ -95,8 +95,9 @@ public class SessionLoader {
             loadMoleculeConcept();
         } catch (SQLException ex) {
             System.err.println("Exception while loading memory.");
+            System.err.print(ex.toString());
             System.exit(-1);
-        }
+        }*/
     }
 
     /**
@@ -105,7 +106,7 @@ public class SessionLoader {
      * @throws SQLException
      */
     private void loadSessionData() throws SQLException {
-        String query = "SELECT * FROM session WHERE sessionid=" + sessionId + ";";
+        String query = "SELECT * FROM session WHERE sessionid=\'" + sessionId + "\';";
         ResultSet rs = dbConn.executeQuery(query);
 
         if (rs == null) {
@@ -123,7 +124,7 @@ public class SessionLoader {
      * load all words
      */
     private void loadWordsOnly() throws SQLException {
-        String query = "SELECT * FROM words WHERE sessionid=" + sessionId + ";";
+        String query = "SELECT * FROM words WHERE sessionid=\'" + sessionId + "\';";
         ResultSet rs = dbConn.executeQuery(query);
 
         if (rs == null) {
@@ -136,7 +137,7 @@ public class SessionLoader {
         while (rs.next()) {
             String defid = rs.getString("defid");
 
-            query = "SELECT * FROM definiton WHERE defid=" + defid + ";";
+            query = "SELECT * FROM definition WHERE defid=\'" + defid + "\';";
             ResultSet rsDef = dbConn.executeQuery(query);
 
             if (rsDef == null) {
@@ -172,7 +173,7 @@ public class SessionLoader {
      * Load text only
      */
     private void loadTextOnly() throws SQLException {
-        String query = "SELECT * FROM text WHERE sessionid=" + sessionId + ";";
+        String query = "SELECT * FROM text WHERE sessionid=\'" + sessionId + "\';";
         ResultSet rs = dbConn.executeQuery(query);
 
         if (rs == null) {
@@ -185,7 +186,7 @@ public class SessionLoader {
         while (rs.next()) {
             String defid = rs.getString("defid");
 
-            query = "SELECT * FROM definiton WHERE defid=" + defid + ";";
+            query = "SELECT * FROM definition WHERE defid=\'" + defid + "\';";
             ResultSet rsDef = dbConn.executeQuery(query);
 
             if (rsDef == null) {
@@ -231,7 +232,7 @@ public class SessionLoader {
         while (rs.next()) {
             String defid = rs.getString("defid");
 
-            query = "SELECT * FROM definiton WHERE defid=" + defid + ";";
+            query = "SELECT * FROM definition WHERE defid=\'" + defid + "\';";
             ResultSet rsDef = dbConn.executeQuery(query);
 
             if (rsDef == null) {
@@ -261,7 +262,7 @@ public class SessionLoader {
      * @throws SQLException
      */
     private void loadConcepts() throws SQLException {
-        String query = "SELECT * FROM concepts WHERE sessionid=" + sessionId + ";";
+        String query = "SELECT * FROM concepts WHERE sessionid=\'" + sessionId + "\';";
         ResultSet rs = dbConn.executeQuery(query);
 
         if (rs == null) {
@@ -296,7 +297,7 @@ public class SessionLoader {
      * @throws SQLException
      */
     private void loadConversations() throws SQLException {
-        String query = "SELECT * FROM conversation WHERE sessionid=" + sessionId + ";";
+        String query = "SELECT * FROM conversation WHERE sessionid=\'" + sessionId + "\';";
         ResultSet rs = dbConn.executeQuery(query);
 
         if (rs == null) {
@@ -330,7 +331,7 @@ public class SessionLoader {
      * load all events
      */
     private void loadEvents() throws SQLException {
-        String query = "SELECT * FROM event WHERE sessionid=" + sessionId + ";";
+        String query = "SELECT * FROM event WHERE sessionid=\'" + sessionId + "\';";
         ResultSet rs = dbConn.executeQuery(query);
 
         if (rs == null) {
@@ -355,7 +356,7 @@ public class SessionLoader {
      * load all states
      */
     private void loadStates() throws SQLException {
-        String query = "SELECT * FROM state WHERE sessionid=" + sessionId + ";";
+        String query = "SELECT * FROM state WHERE sessionid=\'" + sessionId + "\';";
         ResultSet rs = dbConn.executeQuery(query);
 
         if (rs == null) {
@@ -382,8 +383,8 @@ public class SessionLoader {
      */
     private void loadConversationConceptNodes() throws SQLException {
         for (Conversation conversation : memory.getConversations()) {
-            String query = "SELECT conceptid FROM conversationconceptrelationship WHERE sessionid=" + sessionId
-                    + ", convoid=" + conversation.getNo() + ";";
+            String query = "SELECT conceptid FROM conversationconceptrelationship WHERE sessionid=\'" + sessionId
+                    + "\', convoid=\'" + conversation.getNo() + "\';";
             ResultSet rs = dbConn.executeQuery(query);
 
             if (rs == null) {
@@ -406,8 +407,8 @@ public class SessionLoader {
 
     private void loadMoleculeConcept() throws SQLException {
         for (ConceptNode conceptNode : memory.getAllConcepts()) {
-            String query = "SELECT defid FROM sessionmoleculesconcept WHERE sessionid=" + sessionId
-                    + ", conceptid=" + conceptNode.getTypeId() + ";";
+            String query = "SELECT defid FROM sessionmoleculesconcept WHERE sessionid=\'" + sessionId
+                    + "\', conceptid=\'" + conceptNode.getTypeId() + "\';";
             ResultSet rs = dbConn.executeQuery(query);
 
             if (rs == null) {
@@ -417,7 +418,7 @@ public class SessionLoader {
             while (rs.next()) {
                 int defid = rs.getInt("defid");
 
-                query = "SELECT trig FROM definition WHERE defid=" + defid + ";";
+                query = "SELECT trig FROM definition WHERE defid=\'" + defid + "\';";
                 ResultSet rsDef = dbConn.executeQuery(query);
 
                 String trigger = rsDef.getString("trig");
