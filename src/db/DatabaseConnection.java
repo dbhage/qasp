@@ -87,7 +87,6 @@ public class DatabaseConnection implements IDatabaseConnection {
 
     @Override
     public ResultSet executeQuery(String query) {
-        System.err.println(query);
         if (connection == null) {
             throw new NullPointerException("Trying to execute query when Connection is null.");
         }
@@ -108,8 +107,6 @@ public class DatabaseConnection implements IDatabaseConnection {
 
     @Override
     public void executeInsert(String insert) {
-        System.err.println(insert);
-
         if (connection == null) {
             throw new NullPointerException("Trying to execute query when Connection is null.");
         }
