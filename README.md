@@ -15,4 +15,4 @@ For more information, see the following documents:
 
 2. Question Answering using a Natural Semantic Meta-Language and a knowledge node based Knowledge Representation system - This document describes the theory behind the tool.
 
-I will post links to these documents soon.
+Link to documents: https://www.dropbox.com/sh/4x42kfdvcvp8pq2/AAD_7AK5YY5KdnWeRR2awHQEa?dl=0
