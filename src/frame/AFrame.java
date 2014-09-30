@@ -26,11 +26,12 @@
 package frame;
 
 /**
- * AFrame class.
- *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:02:22 PM,
- * Nov 7, 2013 Description:
+ * AFrame abstract class.
+ * This class is added for extensibility, where similar behavior for multiple frame types
+ * can be added here and then the different types extend this class. 
+ * This intentionally empty for now.
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:02:22 PM, Nov 7, 2013 
+ * Description:
  */
-public abstract class AFrame {
-
-}
+public abstract class AFrame {}

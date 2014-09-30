@@ -23,12 +23,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory.node.definition;
 
+/**
+ * WordDefinitionNode class.
+ *
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:26:31 PM, Nov 7, 2013 
+ * Description: data structure to represent a word definition node
+ */
 public class WordDefinitionNode extends DefinitionNode {
 
+    /** part of speech tag */
     private final POS pos;
 
+    /**
+     * Constructor
+     * @param trigger - node's trigger
+     * @param primeRep - prime representation
+     * @param pos  - part of speech enum
+     */
     public WordDefinitionNode(String trigger, String primeRep, POS pos) {
         super(trigger, primeRep);
         if (pos == null) {
@@ -44,6 +59,10 @@ public class WordDefinitionNode extends DefinitionNode {
         return pos;
     }
 
+    /**
+     * Check if node is a verb
+     * @return true if verb, false otherwise
+     */
     public boolean isVerb() {
         return pos.equals(POS.V);
     }

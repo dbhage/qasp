@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory.node;
 
 import java.util.ArrayList;
@@ -31,16 +32,31 @@ import java.util.List;
 /**
  * ConceptNode class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:39:08 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:39:08 PM, Nov 7, 2013 
+ * Description:
  */
 public class ConceptNode {
 
+    /** text for concept */
     private final String text;
+    
+    /** type id */
     private final int typeId;
+    
+    /** list of molecules */
     private final List<String> molecules;
+    
+    /** type of concept */
     private final ConceptType type;
 
+    /**
+     * Constructor
+     * @param text - <code>String</code>
+     * @param type - <code>ConceptType</code>
+     * @param tid - <code>int</code>
+     * @param molecules - <code>ArrayList<String></code>
+     */
     public ConceptNode(String text, ConceptType type, int tid, ArrayList<String> molecules) {
         this.text = text;
         this.typeId = tid;
@@ -48,6 +64,10 @@ public class ConceptNode {
         this.type = type;
     }
 
+    /**
+     * Add a molecule
+     * @param molecule 
+     */
     public void addMolecule(String molecule) {
         if (molecule != null) {
             molecules.add(molecule);
@@ -82,6 +102,11 @@ public class ConceptNode {
         return type;
     }
 
+    /**
+     * Check if molecule is present
+     * @param molecule
+     * @return true if contains molecule, false otherwise
+     */
     public boolean containsMolecule(String molecule) {
         for (String mol : molecules) {
             if (mol.equals(molecule)) {

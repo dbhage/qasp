@@ -233,7 +233,7 @@ public class MenuController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Current Convesation Ended!");
+            System.out.println("Current Conversation Ended!");
             model.endCurrentConversation();
         }
 

@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory;
 
 import java.util.ArrayList;
@@ -40,76 +41,54 @@ import memory.node.definition.WordDefinitionNode;
 /**
  * Memory class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:09:27 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:09:27 PM, Nov 7, 2013 
+ * Description: Data structure to represent the whole memory (nodes, conversations etc...)
  */
 public class Memory {
 
-    /**
-     * list of event nodes
-     */
+    /** list of event nodes */
     private HashMap<Integer, EventNode> eventNodes;
 
-    /**
-     * list of state nodes
-     */
+    /** list of state nodes */
     private HashMap<Integer, StateNode> stateNodes;
 
-    /**
-     * list of molecules
-     */
+    /** list of molecules */
     private HashMap<String, DefinitionNode> moleculeNodes;
 
-    /**
-     * list of all definition nodes
-     */
+    /** list of all definition nodes */
     private HashMap<String, List<DefinitionNode>> defNodes;
 
-    /**
-     * list of text definition nodes
-     */
+    /** list of text definition nodes */
     private HashMap<String, List<DefinitionNode>> textNodes;
 
-    /**
-     * list of word definition nodes
-     */
+    /** list of word definition nodes */
     private HashMap<String, List<WordDefinitionNode>> wordNodes;
 
-    /**
-     * list of verb nodes
-     */
+    /** list of verb nodes */
     private HashMap<String, List<WordDefinitionNode>> verbNodes;
 
-    /**
-     * list of all concepts
-     */
+    /** list of all concepts */
     private HashMap<Integer, ConceptNode> allConcepts;
 
-    /**
-     * array of semantic primes
-     */
+    /** array of semantic primes */
     public static Prime[] primes;
 
-    /**
-     * list of conversations
-     */
+    /** List of conversations */
     private ArrayList<Conversation> conversations;
 
-    /**
-     * map of molecules to a list of concept nodes
-     */
+    /** Map of molecules to a list of concept nodes. */
     private HashMap<String, List<ConceptNode>> moleculesToConceptMap;
 
-    /**
-     * This will be used to link concepts, events and states.
-     */
+    /** This will be used to link concepts, events and states. */
     private int conceptNo;
 
-    /**
-     * the current <code>Conversation</code>
-     */
+    /** the current <code>Conversation</code> */
     private Conversation currentConversation;
 
+    /**
+     * Constructor
+     */
     public Memory() {
         this.eventNodes = new HashMap();
         this.stateNodes = new HashMap();
@@ -198,6 +177,12 @@ public class Memory {
         return true;
     }
 
+    /**
+     * Create <code>ConceptNode</code> from parameters and add to allConcepts and current <code>Conversation</code>
+     * @param text - the text
+     * @param type - Concept Type
+     * @param molecules - List of molecules
+     */
     public void addConceptNode(String text, ConceptType type, ArrayList<String> molecules) {
         conceptNo++;
         ConceptNode conceptNode = new ConceptNode(text, type, conceptNo, molecules);
@@ -206,16 +191,30 @@ public class Memory {
         currentConversation.addConceptNode(conceptNode);
     }
 
+    /**
+     * Add state node
+     * @param c 
+     */
     public void addStateNode(String c) {
         System.out.println("Adding State Node #" + conceptNo);
         stateNodes.put(conceptNo, new StateNode(conceptNo, c));
     }
 
+    /**
+     * Add event node
+     * @param v
+     * @param o 
+     */
     public void addEventNode(String v, String o) {
         System.out.println("Adding Event Node #" + conceptNo);
         eventNodes.put(conceptNo, new EventNode(conceptNo, v, o));
     }
 
+    /**
+     * Get a list of Definition nodes
+     * @param trigger
+     * @return 
+     */
     public List<DefinitionNode> getDefinitionNodes(String trigger) {
         return defNodes.get(trigger);
     }
@@ -258,6 +257,10 @@ public class Memory {
         return moleculeNodes.get(trig);
     }
 
+    /**
+     * Check if memory empty
+     * @return true if memory empty, false otherwise
+     */
     public boolean isEmpty() {
         if (eventNodes.isEmpty() && stateNodes.isEmpty() && moleculeNodes.isEmpty()
                 && defNodes.isEmpty() && textNodes.isEmpty() && wordNodes.isEmpty()
@@ -272,6 +275,10 @@ public class Memory {
         return false;
     }
 
+    /**
+     * Get the number of node in conversation
+     * @return <code>int</code> - no of nodes
+     */
     public int getNoOfNodesInConversation() {
         if (currentConversation == null) {
             return 0;
@@ -279,11 +286,15 @@ public class Memory {
         return currentConversation.getNoOfNodes();
     }
 
+    /**
+     * Check if word exists
+     * @param word
+     * @return true if word exists, false otherwise
+     */
     public boolean wordExists(String word) {
         return (wordNodes.get(word) != null);
     }
 
-    /* getters and setters for fields */
     /**
      * @return the eventNodes
      */
@@ -411,6 +422,11 @@ public class Memory {
         return currentConversation;
     }
 
+    /**
+     * Get event
+     * @param typeId
+     * @return <code>EventNode</code>
+     */
     public EventNode getEvent(int typeId) {
         return eventNodes.get(typeId);
     }
@@ -458,6 +474,12 @@ public class Memory {
         this.textNodes = textNodes;
     }
 
+    /**
+     * Check if definition node present
+     * @param subject - subject String
+     * @param primeDef - prime definition String
+     * @return true if DefinitionNode present, false otherwise
+     */
     public boolean hasDefinitionNode(String subject, String primeDef) {
         List<DefinitionNode> nodes = defNodes.get(subject);
         if (nodes == null || nodes.isEmpty()) {
@@ -473,6 +495,11 @@ public class Memory {
         return false;
     }
 
+    /**
+     * Get definition node
+     * @param s
+     * @return <code>DefinitionNode</code>
+     */
     public DefinitionNode getDefinitionNode(String s) {
         return defNodes.get(s).get(0);
     }

@@ -23,19 +23,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory.node;
 
 /**
  * StateNode class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:25:51 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:25:51 PM, Nov 7, 2013 
+ * Description: data structure to represent state node
  */
 public class StateNode {
 
+    /** id */
     private int id;
+    
+    /** characteristics */
     private String characteristics;
 
+    /**
+     * Constructor
+     * @param n - state number
+     * @param c - state characteristics
+     */
     public StateNode(int n, String c) {
         this.id = n;
         this.characteristics = c;

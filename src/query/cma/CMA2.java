@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package query.cma;
 
 import frame.AFrame;
@@ -33,13 +34,14 @@ import query.QueryResult;
 /**
  * CMA2 class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:17:03 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:17:03 PM, Nov 7, 2013 
+ * Description:
  */
 public class CMA2 implements ICMA {
 
     @Override
     public List<QueryResult> search(AFrame frame, Memory memory) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("The CMA2 algorithm is not yet supported.");
     }
 }

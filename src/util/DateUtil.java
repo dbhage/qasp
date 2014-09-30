@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package util;
 
 import java.util.Date;
@@ -30,8 +31,9 @@ import java.util.Date;
 /**
  * DateUtil class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 11:34:41 PM,
- * Nov 20, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 11:34:41 PM, Nov 20, 2013 
+ * Description: utility functions pertinent to date
  */
 public class DateUtil {
 

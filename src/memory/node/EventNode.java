@@ -23,20 +23,32 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory.node;
 
 /**
  * EventNode class.
  * @author Dwijesh Bhageerutty, neerav789@gmail.com 
  * Date created: 1:24:30 PM, Nov 7, 2013 
- * Description:
+ * Description: data structure to represent an event node
  */
 public class EventNode {
 
+    /** id */
     private final int id;
+    
+    /** verb */
     private final String verb;
+    
+    /** object */
     private final String object;
 
+    /**
+     * Constructor
+     * @param n - event number
+     * @param v - event verb
+     * @param o - event object
+     */
     public EventNode(int n, String v, String o) {
         this.id = n;
         this.verb = v;

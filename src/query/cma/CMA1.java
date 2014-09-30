@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package query.cma;
 
 import frame.AFrame;
@@ -42,17 +43,24 @@ import memory.node.definition.DefinitionNode;
 import memory.node.definition.POS;
 import memory.node.definition.WordDefinitionNode;
 import query.QueryResult;
+import static util.StringUtil.stringArrayToString;
 
 /**
  * CMA1 class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:16:29 PM
- * Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:16:29 PM
+ * Description: Closest Match Algo 1
  */
 public class CMA1 implements ICMA {
 
+    /** memory */
     private Memory memory;
+    
+    /** verb threshold */
     private final int V_THRESHOLD = 1;
+    
+    /** list of query results */
     private List<QueryResult> queryResults;
 
     @Override
@@ -77,16 +85,6 @@ public class CMA1 implements ICMA {
         }
 
         return queryResults.subList(startIndex, queryResults.size());
-    }
-
-    private String stringArrayToString(String[] s) {
-        String s1 = "";
-        for (String s2 : s) {
-            s1 += s2 + ",";
-        }
-        if (s1.endsWith(","))
-            s1 = s1.substring(0, s1.length() - 1);
-        return s1;
     }
 
     private void search(AFrame frame) throws NullPointerException {
@@ -374,15 +372,19 @@ public class CMA1 implements ICMA {
             }
 
             String primeRepForSub1 = "";
+            
             for (String s1 : sub1) {
                 primeRepForSub1 += memory.getDefinitionNode(s1).getPrimeRepresentation() + ",";
             }
+ 
             String[] sub1Primes = primeRepForSub1.split(",");
 
             String primeRepForSub2 = "";
+            
             for (String s2 : sub2) {
                 primeRepForSub2 += memory.getDefinitionNode(s2).getPrimeRepresentation() + ",";
             }
+            
             String[] sub2Primes = primeRepForSub2.split(",");
 
             for (String sub1Prime : sub1Primes) {

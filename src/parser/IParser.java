@@ -23,15 +23,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package parser;
 
 /**
  * IParser interface.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:59:01 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 12:59:01 PM, Nov 7, 2013 
+ * Description: Parser Interface
  */
 public interface IParser {
-
     public void parse(String text);
 }

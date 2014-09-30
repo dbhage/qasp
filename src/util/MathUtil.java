@@ -23,13 +23,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package util;
 
 /**
  * MathUtil class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 7:01:04 PM,
- * Nov 22, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 7:01:04 PM, Nov 22, 2013 
+ * Description: utility functions pertinent to math ops
  */
 public class MathUtil {
 
@@ -44,5 +46,4 @@ public class MathUtil {
     public static long getRandomNumber(long min, long max) {
         return min + (long) (Math.random() * ((max - min) + 1));
     }
-
 }

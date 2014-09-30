@@ -23,13 +23,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package session;
 
 /**
  * ISessionManager interface.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 9:40:07 PM,
- * Nov 21, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 9:40:07 PM, Nov 21, 2013 
+ * Description: interface for SessionManagers
  */
 public interface ISessionManager {
     public void createSession();

@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package session;
 
 import db.IDatabaseConnection;
@@ -39,14 +40,21 @@ import memory.node.definition.WordDefinitionNode;
 /**
  * SessionSaver class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 9:39:50 PM,
- * Nov 21, 2013 Description: Save a session to the database
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 9:39:50 PM, Nov 21, 2013 
+ * Description: Save a session to the database
  */
 public class SessionSaver {
-
+    /** database connection */
     private final IDatabaseConnection dbConn;
+    
+    /** session */
     private final Session session;
+    
+    /** memory */
     private final Memory memory;
+    
+    /** session id */
     private final String sessionId;
 
     public SessionSaver(IDatabaseConnection dbConn, Session session) {
@@ -56,13 +64,18 @@ public class SessionSaver {
         this.sessionId = session.getSessionID();
     }
 
+    /**
+     * Save session
+     */
     public void save() {
         try {
             saveSessionData();
+            
             if (memory.isEmpty()) {
                 System.out.println("Memory empty.");
                 return;
             }
+
             saveEvents();
             saveStates();
             saveWordsOnly();
@@ -78,6 +91,10 @@ public class SessionSaver {
         }
     }
 
+    /**
+     * Save session data
+     * @throws SQLException 
+     */
     private void saveSessionData() throws SQLException {
         String insert = "INSERT INTO session VALUES("
                 + "\'" + session.getSessionID() + "\',"
@@ -86,6 +103,9 @@ public class SessionSaver {
         dbConn.executeInsert(insert);
     }
 
+    /**
+     * Save events
+     */
     private void saveEvents() {
         String insert;
         for (EventNode eventNode : memory.getEventNodes()) {

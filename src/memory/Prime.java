@@ -23,13 +23,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory;
 
 /**
  * Prime class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:42:47 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:42:47 PM, Nov 7, 2013 
+ * Description: Prime class
  */
 public class Prime {
 

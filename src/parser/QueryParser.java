@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package parser;
 
 import frame.AFrame;
@@ -34,8 +35,9 @@ import memory.node.definition.WordDefinitionNode;
 /**
  * QueryParser class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:04:39 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:04:39 PM, Nov 7, 2013 
+ * Description: Class responsible for parsing query text in frame
  */
 public class QueryParser extends AParser implements IParser {
 
@@ -55,6 +57,12 @@ public class QueryParser extends AParser implements IParser {
         }
     }
 
+    /**
+     * Process simple query
+     * @param text
+     * @param words
+     * @return frame for processed query
+     */
     private AFrame processSimpleQuery(String text, WordDefinitionNode[] words) {
         AFrame frame = new SVOFrame();
         for (WordDefinitionNode word : words) {

@@ -38,8 +38,13 @@ import session.ISessionManager;
  */
 public class StatisticsController implements Runnable {
 
+    /** The <code>StaticticsPanel</code> */
     private final StatisticsPanel statsPanel;
+    
+    /** The model */
     private final ISessionManager model;
+    
+    /** The view */
     private final QASPFrame view;
 
     /**

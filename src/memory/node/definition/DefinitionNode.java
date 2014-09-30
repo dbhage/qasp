@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory.node.definition;
 
 import java.util.ArrayList;
@@ -31,8 +32,9 @@ import java.util.regex.*;
 /**
  * DefinitionNode class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:26:31 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:26:31 PM, Nov 7, 2013 
+ * Description: data structure to represent a definition node
  */
 public class DefinitionNode {
 
@@ -40,6 +42,11 @@ public class DefinitionNode {
     private final String primeRepresentation;
     private final String[] molecules;
 
+    /**
+     * Constructor
+     * @param trigger - trigger for node
+     * @param primeRep - prime representation
+     */
     public DefinitionNode(String trigger, String primeRep) {
         this.trigger = trigger;
         this.primeRepresentation = primeRep;
@@ -53,6 +60,10 @@ public class DefinitionNode {
         this.molecules = moleculeList.toArray(new String[moleculeList.size()]);
     }
 
+    /**
+     * Check if <code>DefinitionNode</code> is a molecule
+     * @return true if node is a molecule, false otherwise
+     */
     public boolean isMolecule() {
         return trigger.startsWith("#");
     }

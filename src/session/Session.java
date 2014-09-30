@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package session;
 
 import db.IDatabaseConnection;
@@ -34,19 +35,38 @@ import memory.node.definition.POS;
 /**
  * Session class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:18 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 12:55:18 PM, Nov 7, 2013 
+ * Description: data structure to store a session
  */
 public class Session {
 
+    /** session id */
     private String sessionID;
+    
+    /** session's memory */
     private final Memory memory;
+    
+    /** boolean to keep track of whether memory is initialized or not */
     private boolean memoryInitialized;
+    
+    /** start time */
     private long startTime;
+    
+    /** end time */
     private long endTime;
+    
+    /** session live or not? **/
     private boolean live;
+    
+    /** field for database connection */
     private final IDatabaseConnection dbConn;
 
+    /**
+     * Constructor
+     * @param sid - session id
+     * @param dbConn - database connection
+     */
     public Session(String sid, IDatabaseConnection dbConn) {
         this.memory = new Memory();
         this.sessionID = sid;
@@ -55,7 +75,6 @@ public class Session {
         this.dbConn = dbConn;
     }
 
-    /* getters and setters */
     /**
      * @return the sessionID
      */
@@ -176,6 +195,12 @@ public class Session {
         return exists;
     }
 
+    /**
+     * Save a new word.
+     * @param word - the word
+     * @param definition - the definition
+     * @param pos - the part of speech tag in the form of a string
+     */
     public void saveNewWord(String word, String definition, String pos) {
         // add to memory
         memory.addDefinitionNode(word, definition, POS.stringToPOS(pos));

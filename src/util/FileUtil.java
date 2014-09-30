@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package util;
 
 import java.io.BufferedReader;
@@ -34,8 +35,9 @@ import java.util.List;
 /**
  * FileUtil class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 3:07:14 PM,
- * Nov 26, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 3:07:14 PM, Nov 26, 2013 
+ * Description: utility functions pertinent to file ops
  */
 public class FileUtil {
 

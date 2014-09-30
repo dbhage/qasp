@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package qasp;
 
 import forms.QASPFrame;
@@ -39,8 +40,9 @@ import session.ISessionManager;
 /**
  * QASP class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:18 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 12:55:18 PM, Nov 7, 2013 
+ * Description: Main class to launch application
  */
 public class QASP {
 
@@ -127,12 +129,6 @@ public class QASP {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        //QASP.populateDatabase("populateDefinition.sql");
         QASP.startApp();
-        /*
-         String[] currPrimes = "MARJAWAN".split("[^A-Z]");
-         for (String s : currPrimes) {
-         System.out.println(s);
-         }*/
     }
 }

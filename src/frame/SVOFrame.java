@@ -23,12 +23,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package frame;
 
 /**
- *
- * @author Dwijesh Bhageerutty
+ * SVOFrame - Subject Verb Object Frame
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:40:20 PM, Nov 7, 2013 
+ * Description: Data structure to store an SVO frame
  */
+
 public class SVOFrame extends AFrame {
 
     /**
@@ -47,7 +51,6 @@ public class SVOFrame extends AFrame {
     private String object;
 
     public SVOFrame() {
-        
     }
     
     public SVOFrame(String s, String v, String o) {
@@ -108,4 +111,3 @@ public class SVOFrame extends AFrame {
         return new SVOFrame(this.subject, this.verb, this.object);
     }
 }
-

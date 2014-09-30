@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package session;
 
 import db.DatabaseConnection;
@@ -42,14 +43,22 @@ import util.DateUtil;
 /**
  * SessionManager class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 12:55:28 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 12:55:28 PM, Nov 7, 2013 
+ * Description: Class responsible for managing sessions
  */
 public class SessionManager implements ISessionManager {
 
+    /** input handler */
     private final InputHandler inputHandler;
+    
+    /** query handler */
     private final QueryHandler queryHandler;
+    
+    /** current session */
     private Session currentSession;
+    
+    /** database conn */
     private final IDatabaseConnection dbConn;
 
     public SessionManager() {

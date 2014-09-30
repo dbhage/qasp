@@ -39,6 +39,7 @@ import javax.swing.SwingUtilities;
  */
 public class ConversationRepresentationController extends OutputStream {
 
+    /** <code>JTextArea</code> for meta data */
     private final JTextArea metaDataTextArea;
 
     /**

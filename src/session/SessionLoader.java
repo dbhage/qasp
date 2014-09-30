@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package session;
 
 import db.IDatabaseConnection;
@@ -49,14 +50,22 @@ import memory.node.definition.WordDefinitionNode;
 /**
  * SessionLoader class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 10:41:10 PM
- * Nov 20, 2013 Description: Load a session from the database.
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 10:41:10 PM, Nov 20, 2013 
+ * Description: Load a session from the database.
  */
 public class SessionLoader {
 
+    /** database connection */
     private final IDatabaseConnection dbConn;
+    
+    /** session */
     private final Session session;
+    
+    /** memory */
     private final Memory memory;
+    
+    /** session id */
     private final String sessionId;
 
     /**
@@ -82,7 +91,7 @@ public class SessionLoader {
      * Load data into <code>Session</code>
      */
     public void load() {
-        /*try {
+        try {
             loadSessionData();
             loadEvents();
             loadStates();
@@ -97,7 +106,7 @@ public class SessionLoader {
             System.err.println("Exception while loading memory.");
             System.err.print(ex.toString());
             System.exit(-1);
-        }*/
+        }
     }
 
     /**

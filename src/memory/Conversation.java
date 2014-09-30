@@ -23,28 +23,41 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import memory.node.ConceptNode;
 
 /**
  * Conversation class.
- *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:43:20 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:43:20 PM, Nov 7, 2013 
+ * Description: Data structure to store a conversation
  */
 public class Conversation {
 
+    /** Conversation start time */
     private long timeStarted;
+    
+    /** Conversation end time */
     private long timeEnded;
+    
+    /** Is Conversation still live? */
     private boolean live;
+    
+    /** <code>Concept</code>s in Conversation */
     private List<ConceptNode> concepts;
+    
+    /** Transcript for the original conversation */
     private LinkedList<String> transcript;
+
+    /** Conversation number */
     private int no;
+    
+    /** */
     private int noOfNodes;
 
     public Conversation(int n) {
@@ -57,7 +70,7 @@ public class Conversation {
     }
 
     /**
-     *
+     * End this Conversation
      */
     public void endConversation() {
         timeEnded = System.currentTimeMillis();
@@ -65,15 +78,15 @@ public class Conversation {
     }
 
     /**
-     *
-     * @param s
+     * Add a sentence to Conversation
+     * @param s - the sentence String
      */
     public void addSentence(String s) {
         transcript.add(s);
     }
 
     /**
-     *
+     * Add <code>ConceptNode</code> to Conversation
      * @param conceptNode
      */
     public void addConceptNode(ConceptNode conceptNode) {

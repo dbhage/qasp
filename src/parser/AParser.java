@@ -23,27 +23,34 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package parser;
 
 import java.util.ArrayList;
 import memory.Memory;
-import memory.node.definition.POS;
 import memory.node.definition.WordDefinitionNode;
 
 /**
  * AParser class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 7:23:40 PM,
- * Nov 28, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 7:23:40 PM, Nov 28, 2013 
+ * Description: abstract class to be extended by all parsers
  */
 public abstract class AParser {
 
+    /** Memory */
     public final Memory memory;
 
     public AParser(Memory memory) {
         this.memory = memory;
     }
 
+    /**
+     * Tokenize a sentence
+     * @param sentence
+     * @return multi dimensional array of <code>WordDefinitionNode</code>s
+     */
     protected WordDefinitionNode[][] tokenizeSentence(String sentence) {
         String[] words = sentence.split(" ");
         ArrayList<ArrayList<WordDefinitionNode>> masterList = new ArrayList<>();
@@ -68,10 +75,14 @@ public abstract class AParser {
             }
         }
 
-        // TODO: remove duplicates
         return combinations;
     }
 
+    /**
+     * Generate prime rep for a list of nodes
+     * @param nodes
+     * @return <code>String</code>
+     */
     protected String generatePrimeRepForText(WordDefinitionNode[] nodes) {
         String primeRep = "";
         

@@ -39,14 +39,32 @@ import java.sql.Statement;
  */
 public class DatabaseConnection implements IDatabaseConnection {
 
+    /** Field for the database name */
     private final String databaseName;
+    
+    /** Port number */
     private final int portNo;
+    
+    /** Host name */
     private final String hostName;
+    
+    /** User name */
     private final String userName;
+    
+    /** password for database */
     private final String password;
 
+    /** <code>Connection</code> Object */
     private Connection connection;
 
+    /**
+     * Constructor
+     * @param databaseName
+     * @param portNo
+     * @param hostName
+     * @param userName
+     * @param password 
+     */
     public DatabaseConnection(String databaseName, int portNo, String hostName, String userName, String password) {
         this.databaseName = databaseName;
         this.hostName = hostName;

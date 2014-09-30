@@ -23,13 +23,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package memory.node;
 
 /**
  * ConceptType Enum.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:41:02 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:41:02 PM, Nov 7, 2013 
+ * Description: type of concept
  */
 public enum ConceptType {
 

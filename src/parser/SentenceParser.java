@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package parser;
 
 import frame.AFrame;
@@ -38,8 +39,9 @@ import memory.node.definition.WordDefinitionNode;
 /**
  * SentenceParser class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:01:18 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:01:18 PM, Nov 7, 2013 
+ * Description:
  */
 public class SentenceParser extends AParser implements IParser {
 

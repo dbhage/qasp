@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package query.cma;
 
 import frame.AFrame;
@@ -33,8 +34,9 @@ import query.QueryResult;
 /**
  * ICMA interface.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:11:30 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:11:30 PM, Nov 7, 2013 
+ * Description: Interface for Closest Match Algo
  */
 public interface ICMA {
     public List<QueryResult> search(AFrame frame, Memory memory);

@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package query;
 
 import query.cma.ICMA;
@@ -37,14 +38,21 @@ import query.cma.CMAType;
 /**
  * QueryHandler class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:08:29 PM Nov
- * 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:08:29 PM Nov 7, 2013 
+ * Description: Class responsible for handling queries from user
  */
 public class QueryHandler {
 
     private ICMA icma;
     private List<QueryResult> queryResults;
 
+    /**
+     * Handle query.
+     * @param frames - query's frames
+     * @param cType - which closest match algo type to use
+     * @param memory - memory to use to answer query
+     */
     public void handleQuery(AFrame[] frames, CMAType cType, Memory memory) {
         if (frames == null || cType == null || memory == null) {
             throw new NullPointerException("null parameters being passed to QueryHandler.queryHandler");
@@ -69,6 +77,10 @@ public class QueryHandler {
         }
     }
 
+    /**
+     * Return all answers or no answer string
+     * @return <code>String</code> for answer(s)
+     */
     public String getAnswer() {
         if (queryResults == null || queryResults.isEmpty()) {
             return "no answer was found";

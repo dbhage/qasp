@@ -23,6 +23,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
 package parser;
 
 import frame.AFrame;
@@ -31,13 +32,20 @@ import memory.Memory;
 /**
  * InputHandler class.
  *
- * @author Dwijesh Bhageerutty, neerav789@gmail.com Date created: 1:00:53 PM,
- * Nov 7, 2013 Description:
+ * @author Dwijesh Bhageerutty, neerav789@gmail.com 
+ * Date created: 1:00:53 PM, Nov 7, 2013 
+ * Description: Class to handle input from user
  */
 public class InputHandler {
 
     private IParser parser;
 
+    /**
+     * Handle text from user.
+     * @param text - input
+     * @param pType - parser type to be used
+     * @param memory - memory
+     */
     public void handleText(String text, ParserType pType, Memory memory) {
         if (pType == null) {
             System.err.println("Parser type is null.");
